@@ -1,7 +1,9 @@
+import { TestPage1 } from './pages/TestPage1/TestPage1';
+
 export const App = () => {
   return (
     <div>
-      Some code will be here..
+      <TestPage1 />
     </div>
   )
 };
