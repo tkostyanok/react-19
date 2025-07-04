@@ -1,11 +1,11 @@
 import { useMemo } from 'react';
 
-import { DataTable } from 'src/components/Organisms';
 import { MarvelHeroModal } from 'src/components/Modals';
-
-import type { IMarvelHeroesData } from 'src/interfaces';
-import { columnsDef as initColumnsDef } from './utils/helper';
+import { DataTable } from 'src/components/Organisms';
 import { useTestPage1Context } from 'src/context';
+import type { IMarvelHeroesData } from 'src/interfaces';
+
+import { columnsDef as initColumnsDef } from './utils/helper';
 
 /**
  * TestPageData Component.
@@ -25,25 +25,27 @@ export const TestPageData = () => {
 
   const columnsDef = useMemo(() => initColumnsDef, []);
 
-  const handleRowClick= (params: { row: IMarvelHeroesData}) => {
+  const handleRowClick= (params: { row: IMarvelHeroesData }) => {
     console.log(`row1 "${params.row.nameLabel}" clicked`);
     console.log('row data', params.row);
-    setSelectedData(() => ({ ...params.row }));
+    setSelectedData(() => ({
+      ...params.row 
+    }));
     setIsModalOpen(isModalOpen => !isModalOpen);
   };
 
   return (
     <>
       <DataTable<IMarvelHeroesData>
-        columns={columnsDef}
-        onRowClick={handleRowClick}
-        loading={false}
-        rows={initData}
+        columns={ columnsDef }
+        onRowClick={ handleRowClick }
+        loading={ false }
+        rows={ initData }
       />
       <MarvelHeroModal
-        data={selectedData}
-        handleCloseModal={() => setIsModalOpen(false)}
-        open={isModalOpen}
+        data={ selectedData }
+        handleCloseModal={ () => setIsModalOpen(false) }
+        open={ isModalOpen }
       />
     </>
   );

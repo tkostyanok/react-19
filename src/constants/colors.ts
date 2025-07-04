@@ -1,4 +1,6 @@
-import { amber, blue, green, grey, indigo, orange, purple, red, yellow } from '@mui/material/colors';
+import {
+  amber, blue, green, grey, indigo, orange, purple, red, yellow 
+} from '@mui/material/colors';
 
 /**
  * Common colors

@@ -15,12 +15,12 @@ export const DialogHeader = ({
 }: DialogHeaderProps) => {
   return (
     <DialogTitle
-      sx={{ 
+      sx={ { 
         display: 'flex',
         justifyContent: 'space-between',
         alignItems: 'center'
-      }}
-      id={title}
+      } }
+      id={ title }
     >
       <Box>
         <Typography variant='h5'>
@@ -29,7 +29,9 @@ export const DialogHeader = ({
         {subtitle
           ? (
             <Typography
-              sx={{ color: GREY_600 }}
+              sx={ {
+                color: GREY_600 
+              } }
               variant='body1'
             >
               {subtitle}
@@ -41,12 +43,12 @@ export const DialogHeader = ({
         ? (
           <Button
             aria-label='modal-dialog-close'
-            onClick={handleClose}
-            sx={{
+            onClick={ handleClose }
+            sx={ {
               zIndex: 100,
               color: GREY_600,
               minWidth: 6,
-            }}
+            } }
             variant='text'
           >
             <CloseIcon />

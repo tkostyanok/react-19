@@ -1,11 +1,11 @@
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 
-import { BasicLabel } from '../BasicLabel';
-import { DataViewLoading } from './DataViewLoading';
-
 import { GREY_600 } from 'src/constants/colors';
 
+import { BasicLabel } from '../BasicLabel';
+
+import { DataViewLoading } from './DataViewLoading';
 import type { DataViewProps } from './DataViewProps';
 
 export const DataView = ({
@@ -24,15 +24,15 @@ export const DataView = ({
       display='flex'
       flexDirection='column'
     >
-      <BasicLabel label={label} />
+      <BasicLabel label={ label } />
       <Typography
-        color={GREY_600}
-        sx={{
+        color={ GREY_600 }
+        sx={ {
           overflow: 'hidden',
           py: '2px',
           textOverflow: 'ellipsis',
           whiteSpace: 'pre-line',
-        }}
+        } }
         variant='body1'
       >
         {value}

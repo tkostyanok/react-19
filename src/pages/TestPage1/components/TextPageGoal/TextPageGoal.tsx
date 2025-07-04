@@ -2,9 +2,8 @@ import Box from '@mui/material/Box';
 import List from '@mui/material/List';
 import Typography from '@mui/material/Typography';
 
-import { ListItem } from './components';
-
 import { tasksData } from './data/tasksData';
+import { ListItem } from './components';
 
 export const TextPageGoal = () => {
   return (
@@ -13,11 +12,11 @@ export const TextPageGoal = () => {
       <List>
         {tasksData.map((taskData) => (
           <ListItem
-            key={`${taskData.id} - ${taskData.task}`}
-            taskData={taskData}
+            key={ `${taskData.id} - ${taskData.task}` }
+            taskData={ taskData }
           />
         ))
-}
+        }
       </List>
     </Box>
   );

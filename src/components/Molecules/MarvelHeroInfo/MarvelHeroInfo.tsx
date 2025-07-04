@@ -1,15 +1,16 @@
-import { useEffect, useState } from 'react';
+import {
+  useEffect, useState 
+} from 'react';
+
 import Grid from '@mui/material/Grid';
 
-import { DataField } from './components';
-
 import type { IMarvelHeroesData } from 'src/interfaces';
-import type { MarvelHeroInfoProps } from './MarvelHeroInfoProps';
 import { isEmptyObject } from 'src/utils';
 
-export const MarvelHeroInfo = ({
-  data
-}: MarvelHeroInfoProps) => {
+import { DataField } from './components';
+import type { MarvelHeroInfoProps } from './MarvelHeroInfoProps';
+
+export const MarvelHeroInfo = ({ data }: MarvelHeroInfoProps) => {
   const [ heroDataValues, setHeroDataValues ] = useState<IMarvelHeroesData>({
     nameLabel: null,
     genderLabel: null,
@@ -35,49 +36,59 @@ export const MarvelHeroInfo = ({
   return (
     <Grid
       container
-      spacing={2}
+      spacing={ 2 }
     >
       {/* TODO: Grid can be optimized!! */}
-      <Grid size={12}>
+      <Grid size={ 12 }>
         <DataField
           label='Name'
-          value={heroDataValues.nameLabel || ''}
+          value={ heroDataValues.nameLabel || '' }
         />
       </Grid>
-      <Grid size={{xs: 12, md: 6}}>
+      <Grid
+        size={ {
+          xs: 12,
+          md: 6 
+        } }
+      >
         <DataField
           label='Gender'
-          value={heroDataValues.genderLabel || ''}
+          value={ heroDataValues.genderLabel || '' }
         />
       </Grid>
-      <Grid size={{xs: 12, md: 6}}>
+      <Grid
+        size={ {
+          xs: 12,
+          md: 6 
+        } }
+      >
         <DataField
           label='Citizenship'
-          value={heroDataValues.citizenshipLabel || ''}
+          value={ heroDataValues.citizenshipLabel || '' }
         />
       </Grid>
-      <Grid size={12}>
+      <Grid size={ 12 }>
         <DataField
           label='Skills'
-          value={heroDataValues.skillsLabel || ''}
+          value={ heroDataValues.skillsLabel || '' }
         />
       </Grid>
-      <Grid size={12}>
+      <Grid size={ 12 }>
         <DataField
           label='Occupation'
-          value={heroDataValues.occupationLabel || ''}
+          value={ heroDataValues.occupationLabel || '' }
         />
       </Grid>
-      <Grid size={12}>
+      <Grid size={ 12 }>
         <DataField
           label='Member of'
-          value={heroDataValues.memberOfLabel || ''}
+          value={ heroDataValues.memberOfLabel || '' }
         />
       </Grid>
-      <Grid size={12}>
+      <Grid size={ 12 }>
         <DataField
           label='Creator'
-          value={heroDataValues.creatorLabel || ''}
+          value={ heroDataValues.creatorLabel || '' }
         />
       </Grid>
     </Grid>

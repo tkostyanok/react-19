@@ -5,7 +5,9 @@ export const App = () => {
     <div>
       <TestPage1 />
     </div>
-  )
+  );
 };
 
-export { App as default };
+export {
+  App as default 
+};

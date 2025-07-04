@@ -1,9 +1,11 @@
-import { useMemo, useState } from 'react';
 import type { ReactNode } from 'react';
+import {
+  useMemo, useState 
+} from 'react';
+
+import type { IMarvelHeroesData } from 'src/interfaces';
 
 import { TestPage1Context } from './TestPage1Context';
-
-import type { IMarvelHeroesData } from '../../interfaces';
 
 interface ITestPage1ProviderProps {
   children?: ReactNode;
@@ -30,7 +32,7 @@ export const TestPage1Provider = ({ children, data }: ITestPage1ProviderProps) =
         return {
           ...item,
           id: item.nameLabel,
-        }
+        };
       });
   }, [ data ]);
 
@@ -43,7 +45,7 @@ export const TestPage1Provider = ({ children, data }: ITestPage1ProviderProps) =
   };
 
   return (
-    <TestPage1Context.Provider value={contextValue}>
+    <TestPage1Context.Provider value={ contextValue }>
       {children}
     </TestPage1Context.Provider>
   );

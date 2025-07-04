@@ -8,13 +8,13 @@ export const DataViewLoading = () => {
   return (
     <Box
       display='flex'
-      gap={2}
-      mb={1}
+      gap={ 2 }
+      mb={ 1 }
       width='100%'
     >
       <Skeleton
         variant='rounded'
-        height={40}
+        height={ 40 }
         width='100%'
       />
     </Box>

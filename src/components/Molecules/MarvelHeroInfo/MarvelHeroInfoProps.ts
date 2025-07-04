@@ -1,5 +1,5 @@
 import type { IMarvelHeroesData } from 'src/interfaces';
 
-export interface MarvelHeroInfoProps {
+export interface MarvelHeroInfoProps { 
   data: IMarvelHeroesData | null;
 }

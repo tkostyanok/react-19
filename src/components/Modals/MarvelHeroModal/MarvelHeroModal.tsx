@@ -1,9 +1,17 @@
-import type { SyntheticEvent } from 'react';
+// import type { SyntheticEvent } from 'react';
 
-import { Dialog, DialogContent, DialogActions, useMediaQuery, useTheme, Button } from '@mui/material';
+import {
+  useMediaQuery, useTheme 
+} from '@mui/material';
+import Button from '@mui/material/Button';
+import Dialog from '@mui/material/Dialog';
+import DialogActions from '@mui/material/DialogActions';
+import DialogContent from '@mui/material/DialogContent';
 
-import { MarvelHeroInfo } from '../../Molecules';
+import { MarvelHeroInfo } from 'src/components/Molecules';
+
 import { DialogHeader } from '../components/DialogHeader';
+
 import type { MarvelHeroModalProps } from './MarvelHeroModalProps';
 
 export const MarvelHeroModal = ({
@@ -18,10 +26,10 @@ export const MarvelHeroModal = ({
   const title = isNewHero ? 'Add New Hero' : 'Marvel Hero Details';
   console.log('modal data', data);
 
-  const handleChange = (event: SyntheticEvent) => {
-    const target = event.target as HTMLInputElement;
-    console.log(`Change event on ${target.name}: ${target.value}`);
-  };
+  // const handleChange = (event: SyntheticEvent) => {
+  //   const target = event.target as HTMLInputElement;
+  //   console.log(`Change event on ${target.name}: ${target.value}`);
+  // };
 
   const handleSubmit = async () => {
     /** TODO: submit data */
@@ -30,28 +38,28 @@ export const MarvelHeroModal = ({
 
   return (
     <Dialog
-      fullScreen={fullScreen}
+      fullScreen={ fullScreen }
       fullWidth
       maxWidth='sm'
-      open={open}
-      onClose={handleCloseModal}
+      open={ open }
+      onClose={ handleCloseModal }
     >
       <DialogHeader
-        handleClose={handleCloseModal}
-        title={title}
+        handleClose={ handleCloseModal }
+        title={ title }
       />
       <DialogContent
         // sx={{
         //   pt: `8px !important`,
         // }}
       >
-        <MarvelHeroInfo data={data} />
+        <MarvelHeroInfo data={ data } />
       </DialogContent>
       <DialogActions>
         <Button
           color='secondary'
-          disabled={false}
-          onClick={handleSubmit}
+          disabled={ false }
+          onClick={ handleSubmit }
           type='submit'
           variant='contained'
           size='small'
@@ -60,7 +68,7 @@ export const MarvelHeroModal = ({
         </Button>
         <Button
           color='error'
-          onClick={handleCloseModal}
+          onClick={ handleCloseModal }
           variant='text'
           size='small'
         >

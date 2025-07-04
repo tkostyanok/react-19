@@ -1,8 +1,10 @@
-import js from '@eslint/js'
-import globals from 'globals'
-import reactHooks from 'eslint-plugin-react-hooks'
-import reactRefresh from 'eslint-plugin-react-refresh'
-import tseslint from 'typescript-eslint'
+import js from '@eslint/js';
+import globals from 'globals';
+import reactHooks from 'eslint-plugin-react-hooks';
+import reactRefresh from 'eslint-plugin-react-refresh';
+import simpleImportSort from 'eslint-plugin-simple-import-sort';
+import stylistic from '@stylistic/eslint-plugin';
+import tseslint from 'typescript-eslint';
 
 export default tseslint.config(
   { ignores: ['dist'] },
@@ -16,32 +18,73 @@ export default tseslint.config(
     plugins: {
       'react-hooks': reactHooks,
       'react-refresh': reactRefresh,
+      '@stylistic': stylistic,
+      'simple-import-sort': simpleImportSort,
     },
     rules: {
       ...reactHooks.configs.recommended.rules,
-      'import/order': [
-        'error',
-        {
-          'groups': ['builtin', 'external', 'internal', [ 'parent', 'sibling', 'index' ]],
-          'pathGroups': [
-            {
-              'pattern': 'react',
-              'group': 'external',
-              'position': 'before'
-            }
-          ],
-          'pathGroupsExcludedImportTypes': ['react'],
-          'newlines-between': 'always',
-          'alphabetize': {
-            'order': 'asc',
-            'caseInsensitive': true
-          }
+      '@stylistic/array-bracket-spacing': [ 'error', 'always' ],
+
+      // Rule: https://eslint.style/rules/jsx-closing-bracket-location
+      '@stylistic/jsx-closing-bracket-location': 'error',
+      // Rule: https://eslint.style/rules/jsx-closing-tag-location
+      '@stylistic/jsx-closing-tag-location': 'error',
+      // Rule: https://eslint.style/rules/jsx-first-prop-new-line
+      '@stylistic/jsx-first-prop-new-line': ['error', 'multiline'],
+
+
+      // Rule: https://eslint.style/rules/indent
+      '@stylistic/indent': [ 'error', 2 ],
+
+      // Rule: https://eslint.style/rules/object-curly-newline
+      '@stylistic/object-curly-newline': [
+        'error', 
+        { 
+          'ObjectExpression': 'always',
+          'ObjectPattern': { 'multiline': true },
+          'ImportDeclaration': { 'multiline': true, 'minProperties': 2 },
+          'ExportDeclaration': 'always',
         }
       ],
+      '@stylistic/object-curly-spacing': ['error', 'always', { 'arraysInObjects': false }],
+      '@stylistic/object-property-newline': 'error',
+
+
       'react-refresh/only-export-components': [
         'warn',
         { allowConstantExport: true },
       ],
+      
+      // Rule: https://eslint.org/docs/latest/rules/semi
+      'semi': [ 'error', 'always' ],
+
+      'simple-import-sort/imports': [
+        'error',
+        {
+          'groups': [
+            // `react` and `react-dom` are always imported first.
+            ['^react'],
+            // Packages starting with `@mui/*`
+            ['^@mui/material', '@mui/x-data-grid', '^@mui/system', '^@mui/icons-material' ],
+            // Packages starting with a character, with `@` and with `~`
+            // Note: test '(?!src\/(?:\/|$))' excludes imports starting with `src/`
+            ['^[a-z](?!src\/(?:\/|$))', '^@', '^~'],
+            // ['^[a-z]', '^@', '^~'],
+            // Imports starting with `src`
+            ['src$', ],
+            // Imports starting with `../`
+            ['^\\.\\.(?!/?$)', '^\\.\\./?$'],
+            // Imports starting with `./`
+            ['^\\./(?=.*/)(?!/?$)', '^\\.(?!/?$)', '^\\./?$'],
+            // Style imports
+            ['^.+\\.s?css$'],
+            // Side effect imports
+            ['^\\u0000']
+          ]  
+        }
+      ],
+      'simple-import-sort/exports': 'error',
+      
     },
   },
 )

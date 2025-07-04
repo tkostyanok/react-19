@@ -1,8 +1,13 @@
-import { TestPage1Provider, useTestPage1Context } from '../../context';
-import { TestPageData, TextPageGoal } from './components';
-
+import {
+  TestPage1Provider,
+  useTestPage1Context 
+} from 'src/context';
 
 import { mockData } from './data/mockData';
+import {
+  TestPageData,
+  TextPageGoal 
+} from './components';
 
 // TODO: implement translation
 export const TestPage1 = () => {
@@ -11,7 +16,7 @@ export const TestPage1 = () => {
 
   return (
     <TestPage1Provider
-      data = {mockData}
+      data = { mockData }
     >
       <TextPageGoal />
       <TestPageData />

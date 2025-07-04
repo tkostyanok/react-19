@@ -1,7 +1,13 @@
-import { useContext, createContext } from 'react';
-import type { Dispatch, SetStateAction } from 'react';
+import type {
+  Dispatch,
+  SetStateAction 
+} from 'react';
+import {
+  createContext,
+  useContext 
+} from 'react';
 
-import type { IMarvelHeroesData } from '../../interfaces';
+import type { IMarvelHeroesData } from 'src/interfaces';
 
 interface ITestPage1Context {
   initData: IMarvelHeroesData[];
