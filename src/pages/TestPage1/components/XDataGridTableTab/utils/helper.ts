@@ -1,6 +1,6 @@
 import type { GridColDef } from '@mui/x-data-grid';
 
-export const columnsDef: GridColDef[] = [
+export const columnsDefault: GridColDef[] = [
   { 
     field: 'nameLabel',
     headerName: 'Name',

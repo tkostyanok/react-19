@@ -1,0 +1,1 @@
+export { TestPage1Layout as default } from './TestPage1Layout';

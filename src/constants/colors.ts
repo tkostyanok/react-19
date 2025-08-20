@@ -47,6 +47,7 @@ export const GREY_A100 = grey['A100'];
 export const INDIGO_50 = indigo[50];
 export const INDIGO_100 = indigo[100];
 export const INDIGO_600 = indigo[600];
+export const INDIGO_900 = indigo[900];
 
 export const ORANGE_50 = orange[50];
 export const ORANGE_500 = orange[500];

@@ -6,13 +6,21 @@ import {
 import { GREY_100 } from 'src/constants/colors';
 
 /**
- * DataTable Component.
- */
-export const DataTable = <T extends object>({ ...props }: DataGridProps<T>) => {
+ * XDataGridTable component is a wrapper around MUI's DataGrid and does not 
+ *   implement any additional functionality.
+ * It provides a customized data grid with specific styles and properties.
+ * It is used to maintain consistency in the codebase and to apply specific styles.
+ *
+ * @see https://mui.com/x/react-data-grid/
+ * @see https://mui.com/x/api/data-grid/data-grid/
 
+* @param props - The properties to pass to the DataGrid component.
+ * 
+ * @returns A DataGrid component with customized styles and properties.
+ */
+export const XDataGridTable = <T extends object>({ ...props }: DataGridProps<T>) => {
   return (
     <DataGrid
-      // columns={columnsDef}
       initialState={ {
         pagination: {
           paginationModel: {
@@ -20,16 +28,8 @@ export const DataTable = <T extends object>({ ...props }: DataGridProps<T>) => {
           } 
         }, 
       } }
-      // loading={loading}
-      // onRowClick={handleRowClick}
       rowHeight={ 60 }
-      // rows={rowsData}
       pageSizeOptions={ [ 10, 20, 50 ] }
-      // density='compact' // ??
-      // disableSelectionOnClick // ??
-      // onSortModelChange={(newSortModel) => setSortModel(newSortModel)} // ??
-      // sortModel={sortModel} // ??
-
       sx={ {
         minHeight: 400,
         '& .MuiDataGrid-virtualScroller': {

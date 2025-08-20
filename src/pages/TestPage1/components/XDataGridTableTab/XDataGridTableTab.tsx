@@ -1,17 +1,18 @@
 import { useMemo } from 'react';
 
+import { GridLogicOperator } from '@mui/x-data-grid';
+
 import { MarvelHeroModal } from 'src/components/Modals';
-import { DataTable } from 'src/components/Organisms';
+import { XDataGridTable } from 'src/components/Organisms';
 import { useTestPage1Context } from 'src/context';
 import type { IMarvelHeroesData } from 'src/interfaces';
 
-import { columnsDef as initColumnsDef } from './utils/helper';
+import { columnsDefault as initColumnsDefault } from './utils/helper';
 
 /**
- * TestPageData Component.
- * Displays a data table with Marvel heroes and a modal for hero details.
+ * XDataGridTableTab displays a `X DataGrid` table component.
  */
-export const TestPageData = () => {
+export const XDataGridTableTab = () => {
   const {
     initData,
     isModalOpen,
@@ -23,7 +24,7 @@ export const TestPageData = () => {
   console.log('initData', initData);
   console.log('isModalOpen', isModalOpen);
 
-  const columnsDef = useMemo(() => initColumnsDef, []);
+  const columnsDefault = useMemo(() => initColumnsDefault, []);
 
   const handleRowClick= (params: { row: IMarvelHeroesData }) => {
     console.log(`row1 "${params.row.nameLabel}" clicked`);
@@ -36,10 +37,19 @@ export const TestPageData = () => {
 
   return (
     <>
-      <DataTable<IMarvelHeroesData>
-        columns={ columnsDef }
-        onRowClick={ handleRowClick }
+      <XDataGridTable<IMarvelHeroesData>
+        columns={ columnsDefault }
+        filterModel={ {
+          // items: [ ...dataFiltered ],
+          // items: [ ...initData ],
+          items: [],
+          logicOperator: GridLogicOperator.And,
+          quickFilterValues: [],
+          quickFilterLogicOperator: GridLogicOperator.And,
+          quickFilterExcludeHiddenColumns: true,
+        } }
         loading={ false }
+        onRowClick={ handleRowClick }
         rows={ initData }
       />
       <MarvelHeroModal

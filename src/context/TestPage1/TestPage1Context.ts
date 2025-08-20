@@ -8,7 +8,7 @@ import {
 } from 'react';
 
 import type { IMarvelHeroesData } from 'src/interfaces';
-
+ 
 interface ITestPage1Context {
   initData: IMarvelHeroesData[];
   isModalOpen: boolean;
