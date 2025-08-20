@@ -5,12 +5,12 @@ export const tasksData: ITestTask1[] = [
     id: 1,
     isCompleted: false,
     linkToMUI: 'https://mui.com/x/react-data-grid/',
-    task: 'Test MUI: Data Grid',
+    task: 'Test MUI: DataGrid component',
     subTasks: [
       {
         id: 1,
         isCompleted: true,
-        title: 'Create Data Table component with data',
+        title: 'Create DataGrid component with data',
       },
       {
         id: 2,
@@ -36,7 +36,7 @@ export const tasksData: ITestTask1[] = [
       {
         id: 6,
         isCompleted: false,
-        title: 'Show current filter(s) in "chip(s)"',
+        title: 'Show current filter(s) in `chip(s)`',
       },
       {
         id: 7,
@@ -58,13 +58,56 @@ export const tasksData: ITestTask1[] = [
   {
     id: 2,
     isCompleted: false,
+    linkToMUI: 'https://mui.com/material-ui/react-table/',
+    task: 'Test MUI: Table component',
+    subTasks: [
+      {
+        id: 1,
+        isCompleted: true,
+        title: 'Create Table component with data',
+      },
+      {
+        id: 2,
+        isCompleted: true,
+        title: 'Test default sorting functionality',
+      },
+      {
+        id: 3,
+        isCompleted: false,
+        title: 'Create filtering functionality by multiple columns',
+      },
+      {
+        id: 4,
+        isCompleted: false,
+        title: 'Show current filter(s) in `chip(s)` (by column / all together -> ?? )',
+      },
+      {
+        id: 5,
+        isCompleted: false,
+        title: 'Allow remove filter `chip`',
+      },
+      {
+        id: 6,
+        isCompleted: false,
+        title: 'Allow remove all filter `chips`',
+      },
+      {
+        id: 7,
+        isCompleted: false,
+        title: 'Add toggle which allow switch between cell editing and Modal editing',
+      }
+    ]
+  },
+  {
+    id: 3,
+    isCompleted: false,
     linkToMUI: '?? add link ??',
     task: 'Test MUI: `own` data table based on MUI components',
     subTasks: [
       {
         id: 1,
         isCompleted: false,
-        title: 'Create Data Table component with data',
+        title: 'Create Table component with data',
       },
       {
         id: 2,

@@ -1,9 +1,9 @@
 import js from '@eslint/js';
-import globals from 'globals';
+import stylistic from '@stylistic/eslint-plugin';
 import reactHooks from 'eslint-plugin-react-hooks';
 import reactRefresh from 'eslint-plugin-react-refresh';
 import simpleImportSort from 'eslint-plugin-simple-import-sort';
-import stylistic from '@stylistic/eslint-plugin';
+import globals from 'globals';
 import tseslint from 'typescript-eslint';
 
 export default tseslint.config(
@@ -43,7 +43,7 @@ export default tseslint.config(
           'ObjectExpression': 'always',
           'ObjectPattern': { 'multiline': true },
           'ImportDeclaration': { 'multiline': true, 'minProperties': 2 },
-          'ExportDeclaration': 'always',
+          'ExportDeclaration': { 'multiline': true, 'minProperties': 2 },
         }
       ],
       '@stylistic/object-curly-spacing': ['error', 'always', { 'arraysInObjects': false }],

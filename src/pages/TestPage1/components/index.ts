@@ -1,2 +1,4 @@
-export * from './TestPageData';
+export * from './CustomTableTab';
+export * from './MuiTableTab';
 export * from './TextPageGoal';
+export * from './XDataGridTableTab';

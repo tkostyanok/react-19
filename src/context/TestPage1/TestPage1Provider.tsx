@@ -16,8 +16,6 @@ export const TestPage1Provider = ({ children, data }: ITestPage1ProviderProps) =
   const [ isModalOpen, setIsModalOpen ] = useState(false);
   const [ selectedData, setSelectedData ] = useState<IMarvelHeroesData | null>(null);
 
-  console.log('Provider isModalOpen', isModalOpen);
-
   const initData = useMemo(() => {
     if (data?.length === 0) {
       return [];
