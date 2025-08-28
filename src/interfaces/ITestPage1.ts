@@ -1,3 +1,5 @@
+import type { TableCellProps } from '@mui/material/TableCell';
+
 type TGender = 'male' | 'female';
 
 export interface IMarvelHeroesData {
@@ -23,5 +25,26 @@ export interface ITestTask1 {
   linkToMUI?: string;
   subTasks: ISubTask[];
   task: string;
-
 }
+
+export interface MuiTableHeaderCell<T extends object> {
+  /**
+   * Align cell content.
+   * Possible values: 'center' | 'left' | 'right' | 'justify' | 'inherit'
+   */
+  align?: Pick<TableCellProps, 'align'>['align'];
+  /**
+   * The unique identifier of the column.
+   */
+  field: Extract<keyof T, string>;
+  /**
+   * The title displayed in the column header cell.
+   */
+  headerName: string;
+  /**
+   * The width of the column in pixels.
+   */
+  width?: number;
+}
+
+export type Order = 'asc' | 'desc';

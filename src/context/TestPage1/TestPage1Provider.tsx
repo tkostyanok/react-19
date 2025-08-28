@@ -12,32 +12,28 @@ interface ITestPage1ProviderProps {
   data?: IMarvelHeroesData[];
 }
 
-export const TestPage1Provider = ({ children, data }: ITestPage1ProviderProps) => {
+export const TestPage1Provider = ({
+  children,
+  data
+}: ITestPage1ProviderProps) => {
   const [ isModalOpen, setIsModalOpen ] = useState(false);
+  const [ filteredData, setFilteredData ] = useState<IMarvelHeroesData[]>([]);
   const [ selectedData, setSelectedData ] = useState<IMarvelHeroesData | null>(null);
 
   const initData = useMemo(() => {
-    if (data?.length === 0) {
+    if (!data || data?.length === 0) {
       return [];
     }
 
-    if (!data) {
-      return [];
-    }
-
-    return data
-      .map((item: IMarvelHeroesData) => {
-        return {
-          ...item,
-          id: item.nameLabel,
-        };
-      });
+    return data;
   }, [ data ]);
 
   const contextValue = {
+    filteredData,
     initData,
     isModalOpen,
     selectedData,
+    setFilteredData,
     setIsModalOpen,
     setSelectedData
   };

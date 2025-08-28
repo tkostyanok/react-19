@@ -1,7 +1,156 @@
-export const MuiTable = () => {
+import type { MouseEvent } from 'react';
+import { useMemo, useState } from 'react';
+
+import Box from '@mui/material/Box';
+import Paper from '@mui/material/Paper';
+import Table from '@mui/material/Table';
+import TableBody from '@mui/material/TableBody';
+import TableCell from '@mui/material/TableCell';
+import TableContainer from '@mui/material/TableContainer';
+import TablePagination from '@mui/material/TablePagination';
+import TableRow from '@mui/material/TableRow';
+
+import type { Order } from 'src/interfaces';
+
+import {
+  MuiTableHeader,
+  MuiTableToolbar
+} from './components';
+import type { MuiTableProps } from './MuiTableProps';
+import { getComparator } from './utils';
+
+/**
+ * MuiTable displays a `MUI Table` component.
+ */
+export const MuiTable = <T extends object>({
+  headerCells,
+  onRowClick,
+  rowsData,
+}: MuiTableProps<T>) => {
+  const [ order, setOrder ] = useState<Order>('asc');
+  const [ orderBy, setOrderBy ] = useState<keyof T>(headerCells[0]?.field);
+  const [ page, setPage ] = useState(0);
+  const [ rowsPerPage, setRowsPerPage ] = useState(10);
+
+  const headerCellsMap = headerCells.map((cell) => cell.field);
+  
+  const handleChangePage = (_event: unknown, newPage: number) => {
+    setPage(newPage);
+  };
+
+  const handleChangeRowsPerPage = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setRowsPerPage(parseInt(event.target.value, 10));
+    setPage(0);
+  };
+
+  const handleRequestSort = (
+    _event: MouseEvent<unknown>,
+    property: keyof T,
+  ) => {
+    const isAsc = orderBy === property && order === 'asc';
+    setOrder(isAsc ? 'desc' : 'asc');
+    setOrderBy(property);
+  };
+
+  /**
+   * Avoid a layout jump when reaching the last page with empty rows.
+   */
+  const emptyRows =
+    page > 0 ? Math.max(0, (1 + page) * rowsPerPage - rowsData.length) : 0;
+
+  /**
+   * Memoized visible rows data based on current page and rows per page.
+   * This improves performance by preventing unnecessary recalculations on re-renders.
+   */
+  const visibleRowsData = useMemo(
+    () =>
+      [ ...rowsData ]
+        .sort(getComparator<T>(order, orderBy))
+        .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage),
+    [ order, orderBy, page, rowsPerPage, rowsData ],
+  );
+
   return (
-    <div>
-      MUI Table
-    </div>
+    <Box sx={{ width: '100%' }}>
+      <Paper 
+        sx={{ 
+          width: '100%',
+          mb: 2
+        }}
+      >
+        <MuiTableToolbar />
+        <TableContainer>
+          <Table
+            aria-labelledby='tableTitle'
+            sx={{ minWidth: 750 }}
+          >
+            <MuiTableHeader
+              headerCells={headerCells}
+              order={order}
+              orderBy={orderBy}
+              onRequestSort={handleRequestSort}
+            />
+            <TableBody>
+              {visibleRowsData.map((rowData, rowIndex) => {
+                return (
+                  <TableRow
+                    hover
+                    key={`table-row-${rowIndex}`}
+                    onClick={() => {
+                      // console.log('rowData: ', rowData);
+                      if (onRowClick) {
+                        onRowClick(rowData);
+                      }
+                    }}
+                    sx={{ cursor: 'pointer' }}
+                    tabIndex={-1}
+                  > 
+                    {
+                      Object.keys(rowData).map((key, cellIndex) => {
+                        if(headerCellsMap.includes(key as Extract<keyof T, string>)) {
+                          return (
+                            <TableCell
+                              key={`table-row-${rowIndex}-cell-${key}`}
+                              sx={{
+                                maxWidth: headerCells[cellIndex]?.width ? `${headerCells[cellIndex]?.width}px` : 'none',
+                                minWidth: headerCells[cellIndex]?.width ? `${headerCells[cellIndex]?.width}px` : 'auto',
+                                overflow: 'hidden',
+                                textOverflow: 'ellipsis',
+                                width: headerCells[cellIndex]?.width ? `${headerCells[cellIndex]?.width}px` : 'auto',
+                                whiteSpace: 'nowrap',
+                              }}
+                            >
+                              {`${rowData[key as keyof T]}`}
+                            </TableCell>
+                          );
+                        }
+                      })
+
+                    }
+                  </TableRow>
+                );
+              })}
+              {emptyRows > 0
+                ? (
+                  <TableRow style={{ height: 53 * emptyRows }}>
+                    <TableCell colSpan={6} />
+                  </TableRow>
+                )
+                : null
+              }
+            </TableBody>
+          </Table>
+        </TableContainer>
+        <TablePagination
+          rowsPerPageOptions={[10, 20, 25]}
+          component='div'
+          count={rowsData.length}
+          rowsPerPage={rowsPerPage}
+          page={page}
+          onPageChange={handleChangePage}
+          onRowsPerPageChange={handleChangeRowsPerPage}
+        />
+      </Paper>
+    </Box>
   );
 };

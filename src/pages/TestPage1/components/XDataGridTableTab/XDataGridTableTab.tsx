@@ -21,14 +21,16 @@ export const XDataGridTableTab = () => {
     setSelectedData,
   } = useTestPage1Context();
 
-  console.log('initData', initData);
-  console.log('isModalOpen', isModalOpen);
-
   const columnsDefault = useMemo(() => initColumnsDefault, []);
+  const rowsData = useMemo(() => initData.map(
+    (item) => { 
+      return {
+        ...item, 
+        id: item.nameLabel
+      };
+    }), [ initData ]);
 
-  const handleRowClick= (params: { row: IMarvelHeroesData }) => {
-    console.log(`row1 "${params.row.nameLabel}" clicked`);
-    console.log('row data', params.row);
+  const handleRowClick = (params: { row: IMarvelHeroesData }) => {
     setSelectedData(() => ({
       ...params.row 
     }));
@@ -50,7 +52,7 @@ export const XDataGridTableTab = () => {
         } }
         loading={ false }
         onRowClick={ handleRowClick }
-        rows={ initData }
+        rows={ rowsData }
       />
       <MarvelHeroModal
         data={ selectedData }

@@ -23,7 +23,7 @@ export const DialogHeader = ({
       id={ title }
     >
       <Box>
-        <Typography variant='h5'>
+        <Typography variant='h6'>
           {title}
         </Typography>
         {subtitle
