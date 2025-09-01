@@ -7,7 +7,8 @@ import type { IMarvelHeroesData } from 'src/interfaces';
 
 export const MuiTableTab = () => {
   const {
-    initData,
+    data,
+    handleSaveData,
     isModalOpen,
     selectedData,
     setIsModalOpen,
@@ -26,12 +27,13 @@ export const MuiTableTab = () => {
     <>
       <MuiTable
         headerCells={headerCells}
-        rowsData={initData}
+        rowsData={data}
         onRowClick={ handleRowClick }
       />
       <MarvelHeroModal
         data={ selectedData }
-        handleCloseModal={ () => setIsModalOpen(false) }
+        onClose={ () => setIsModalOpen(false) }
+        onSave={ handleSaveData }
         open={ isModalOpen }
       />
     </>

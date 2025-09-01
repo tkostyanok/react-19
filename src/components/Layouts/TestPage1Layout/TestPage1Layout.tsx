@@ -26,7 +26,6 @@ export const TestPage1Layout = ({ children }: TestPage1LayoutProps) => {
             flexGrow: 1,
             overflow: 'auto'
           }}
-          // flexGrow={1}
         >
           { children }
         </Box>

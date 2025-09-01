@@ -6,13 +6,13 @@ import CloseIcon from '@mui/icons-material/Close';
 
 import { GREY_600 } from 'src/constants/colors';
 
-import type { DialogHeaderProps } from './DialogHeaderProps';
+import type { ModalHeaderProps } from './ModalHeaderProps';
 
-export const DialogHeader = ({
-  handleClose,
+export const ModalHeader = ({
+  onClose,
   subtitle,
   title
-}: DialogHeaderProps) => {
+}: ModalHeaderProps) => {
   return (
     <DialogTitle
       sx={ { 
@@ -39,11 +39,11 @@ export const DialogHeader = ({
           )
           : null}
       </Box>
-      {handleClose
+      {onClose
         ? (
           <Button
             aria-label='modal-dialog-close'
-            onClick={ handleClose }
+            onClick={ onClose }
             sx={ {
               zIndex: 100,
               color: GREY_600,

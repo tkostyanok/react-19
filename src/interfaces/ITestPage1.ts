@@ -4,19 +4,20 @@ type TGender = 'male' | 'female';
 
 export interface IMarvelHeroesData {
   nameLabel: string | null,
-  genderLabel: TGender | null,
   citizenshipLabel: string | null,
-  skillsLabel: string | null,
-  occupationLabel: string | null,
+  creatorLabel: string | null,
+  genderLabel: TGender | null,
+  id: string | null,
   memberOfLabel: string | null,
-  creatorLabel: string | null
+  occupationLabel: string | null,
+  skillsLabel: string | null,
 }
 
 export interface ISubTask {
   id: number;
-  title: string;
   isCompleted: boolean;
   note?: string;
+  title: string;
 }
 
 export interface ITestTask1 {

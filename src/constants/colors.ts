@@ -1,5 +1,5 @@
 import {
-  amber, blue, green, grey, indigo, orange, purple, red, yellow 
+  amber, blue, green, grey, indigo, lightBlue, orange, purple, red, yellow 
 } from '@mui/material/colors';
 
 /**
@@ -23,6 +23,7 @@ export const BLUE_50 = blue[50];
 export const BLUE_100 = blue[100];
 export const BLUE_500 = blue[500];
 export const BLUE_600 = blue[600];
+export const BLUE_900 = blue[900];
 
 export const GREEN_50 = green[50];
 export const GREEN_100 = green[100];
@@ -48,6 +49,8 @@ export const INDIGO_50 = indigo[50];
 export const INDIGO_100 = indigo[100];
 export const INDIGO_600 = indigo[600];
 export const INDIGO_900 = indigo[900];
+
+export const LIGHT_BLUE_600 = lightBlue[600];
 
 export const ORANGE_50 = orange[50];
 export const ORANGE_500 = orange[500];

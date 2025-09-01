@@ -14,7 +14,8 @@ import { columnsDefault as initColumnsDefault } from './utils/helper';
  */
 export const XDataGridTableTab = () => {
   const {
-    initData,
+    data,
+    handleSaveData,
     isModalOpen,
     selectedData,
     setIsModalOpen,
@@ -22,13 +23,6 @@ export const XDataGridTableTab = () => {
   } = useTestPage1Context();
 
   const columnsDefault = useMemo(() => initColumnsDefault, []);
-  const rowsData = useMemo(() => initData.map(
-    (item) => { 
-      return {
-        ...item, 
-        id: item.nameLabel
-      };
-    }), [ initData ]);
 
   const handleRowClick = (params: { row: IMarvelHeroesData }) => {
     setSelectedData(() => ({
@@ -52,11 +46,12 @@ export const XDataGridTableTab = () => {
         } }
         loading={ false }
         onRowClick={ handleRowClick }
-        rows={ rowsData }
+        rows = { data }
       />
       <MarvelHeroModal
         data={ selectedData }
-        handleCloseModal={ () => setIsModalOpen(false) }
+        onClose={ () => setIsModalOpen(false) }
+        onSave={ handleSaveData }
         open={ isModalOpen }
       />
     </>

@@ -1,3 +1,5 @@
+import type { SyntheticEvent } from 'react';
+
 export interface DataFieldProps {
   /**
    * If `true` -> allow to modify.
@@ -15,6 +17,14 @@ export interface DataFieldProps {
    * The label content.
    */
   label: string;
+  /**
+   * The name of the input field.
+   */
+  name?: string;
+  /**
+   * Callback fired when the value is changed.
+   */
+  onChange?: (event: SyntheticEvent) => void;
   /**
    * The value of content.
    */

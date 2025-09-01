@@ -1,7 +1,9 @@
 import type { ReactNode } from 'react';
 import {
-  useMemo, useState 
+  useEffect,
+  useState
 } from 'react';
+import { v4 } from 'uuid';
 
 import type { IMarvelHeroesData } from 'src/interfaces';
 
@@ -9,28 +11,51 @@ import { TestPage1Context } from './TestPage1Context';
 
 interface ITestPage1ProviderProps {
   children?: ReactNode;
-  data?: IMarvelHeroesData[];
+  initData?: IMarvelHeroesData[];
 }
 
 export const TestPage1Provider = ({
   children,
-  data
+  initData
 }: ITestPage1ProviderProps) => {
+  const [ data, setData ] = useState<IMarvelHeroesData[]>([]);
   const [ isModalOpen, setIsModalOpen ] = useState(false);
   const [ filteredData, setFilteredData ] = useState<IMarvelHeroesData[]>([]);
   const [ selectedData, setSelectedData ] = useState<IMarvelHeroesData | null>(null);
 
-  const initData = useMemo(() => {
-    if (!data || data?.length === 0) {
-      return [];
+  useEffect(() => {
+    if (!initData || initData?.length === 0) {
+      return;
     }
 
-    return data;
-  }, [ data ]);
+    const _data =  initData
+      .map((item: IMarvelHeroesData) => {
+        return {
+          ...item,
+          id: v4() // Ensure unique IDs,
+        };
+      });
+    setData(_data);
+  }, [ initData ]);
+
+  const handleSaveData = async ( valuesToSave: Partial<IMarvelHeroesData> ) => {
+    // console.log('valuesToSave', valuesToSave);
+    const updatedData = data.map(item => {
+      if (item.id === valuesToSave.id) {
+        return {
+          ...item,
+          ...valuesToSave
+        };
+      }
+      return item;
+    });
+    setData(updatedData);
+  }
 
   const contextValue = {
+    data,
     filteredData,
-    initData,
+    handleSaveData,
     isModalOpen,
     selectedData,
     setFilteredData,

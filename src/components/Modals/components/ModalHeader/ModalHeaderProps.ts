@@ -1,10 +1,10 @@
-export interface DialogHeaderProps {
+export interface ModalHeaderProps {
   /**
    * Callback function to close Modal component.
    * If defined, a close button will be displayed.
    * @default undefined
    */
-  handleClose?: () => void;
+  onClose?: () => void;
   /**
    * Additional text for Modal component.
    * @default undefined

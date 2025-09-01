@@ -35,6 +35,7 @@ export const  MuiTableHeader = <T extends object>({
             sortDirection={orderBy === headerCell.field ? order : false}
             sx={{
               maxWidth: headerCell?.width ? `${headerCell.width}px` : 'none',
+              padding: '16px 10px',
               width: headerCell?.width ? `${headerCell.width}px` : 'auto'
             }}
           >

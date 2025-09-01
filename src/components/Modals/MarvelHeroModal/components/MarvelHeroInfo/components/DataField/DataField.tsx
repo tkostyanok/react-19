@@ -9,6 +9,8 @@ export const DataField = ({
   isEditable = true,
   isLoading,
   label,
+  name,
+  onChange,
   value,
 }: DataFieldProps) => {
 
@@ -26,6 +28,8 @@ export const DataField = ({
     <BasicInput
       isLoading={ isLoading }
       label={ label }
+      name={ name }
+      onChange={ onChange }
       value={ value }
     />
   );

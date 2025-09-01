@@ -10,7 +10,9 @@ import {
 import type { IMarvelHeroesData } from 'src/interfaces';
  
 interface ITestPage1Context {
-  initData: IMarvelHeroesData[];
+  data: IMarvelHeroesData[];
+  handleSaveData: ( valuesToSave: Partial<IMarvelHeroesData> ) => Promise<void>;
+  filteredData: IMarvelHeroesData[];
   isModalOpen: boolean;
   selectedData: IMarvelHeroesData | null;
   // handleIsModalOpen: Dispatch<SetStateAction<boolean>>;
@@ -19,7 +21,9 @@ interface ITestPage1Context {
 }
 
 export const TestPage1Context = createContext<ITestPage1Context>({
-  initData: [],
+  data: [],
+  handleSaveData: async () => {},
+  filteredData: [],
   isModalOpen: false,
   selectedData: null,
   setIsModalOpen: () => {},

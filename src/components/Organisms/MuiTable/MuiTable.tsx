@@ -81,8 +81,7 @@ export const MuiTable = <T extends object>({
         <MuiTableToolbar />
         <TableContainer>
           <Table
-            aria-labelledby='tableTitle'
-            sx={{ minWidth: 750 }}
+            aria-labelledby='mui-table'
           >
             <MuiTableHeader
               headerCells={headerCells}
@@ -97,7 +96,6 @@ export const MuiTable = <T extends object>({
                     hover
                     key={`table-row-${rowIndex}`}
                     onClick={() => {
-                      // console.log('rowData: ', rowData);
                       if (onRowClick) {
                         onRowClick(rowData);
                       }
@@ -115,6 +113,7 @@ export const MuiTable = <T extends object>({
                                 maxWidth: headerCells[cellIndex]?.width ? `${headerCells[cellIndex]?.width}px` : 'none',
                                 minWidth: headerCells[cellIndex]?.width ? `${headerCells[cellIndex]?.width}px` : 'auto',
                                 overflow: 'hidden',
+                                padding: '16px 10px',
                                 textOverflow: 'ellipsis',
                                 width: headerCells[cellIndex]?.width ? `${headerCells[cellIndex]?.width}px` : 'auto',
                                 whiteSpace: 'nowrap',
