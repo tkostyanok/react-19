@@ -1,12 +1,12 @@
-import IconButton from '@mui/material/IconButton';
 import Toolbar from '@mui/material/Toolbar';
-import Tooltip from '@mui/material/Tooltip';
 import Typography from '@mui/material/Typography';
-import FilterListIcon from '@mui/icons-material/FilterList';
 
 import type { MuiTableToolbarProps } from './MuiTableToolbarProps';
 
-export const MuiTableToolbar = ({ title = '' }: MuiTableToolbarProps) => {
+export const MuiTableToolbar = ({ 
+  children,
+  title = ''
+}: MuiTableToolbarProps) => {
   return (
     <Toolbar
       sx={{
@@ -31,11 +31,9 @@ export const MuiTableToolbar = ({ title = '' }: MuiTableToolbarProps) => {
         )}
       </div>
       
-      <Tooltip title='Filters'>
-        <IconButton>
-          <FilterListIcon />
-        </IconButton>
-      </Tooltip>
+      <div>
+        {children}
+      </div>
     </Toolbar>
   );
 };

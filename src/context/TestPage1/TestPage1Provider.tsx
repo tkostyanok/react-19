@@ -5,7 +5,8 @@ import {
 } from 'react';
 import { v4 } from 'uuid';
 
-import type { IMarvelHeroesData } from 'src/interfaces';
+import type { Gender, HeroDataValues, IMarvelHeroesData } from 'src/interfaces';
+import { initFiltersData } from './utils';
 
 import { TestPage1Context } from './TestPage1Context';
 
@@ -19,8 +20,10 @@ export const TestPage1Provider = ({
   initData
 }: ITestPage1ProviderProps) => {
   const [ data, setData ] = useState<IMarvelHeroesData[]>([]);
-  const [ isModalOpen, setIsModalOpen ] = useState(false);
+  const [ hasFilters, setHasFilters ] = useState(false);
+  const [ filters, setFilters ] = useState<HeroDataValues>(initFiltersData);
   const [ filteredData, setFilteredData ] = useState<IMarvelHeroesData[]>([]);
+  const [ isModalOpen, setIsModalOpen ] = useState(false);
   const [ selectedData, setSelectedData ] = useState<IMarvelHeroesData | null>(null);
 
   useEffect(() => {
@@ -38,9 +41,26 @@ export const TestPage1Provider = ({
     setData(_data);
   }, [ initData ]);
 
+  useEffect(() => {
+    let _filteredData = data;
+
+    let _hasFilters = false;
+    if ([ ...filters?.names ].length !== 0) {
+      const selectedNames = [ ...filters.names ].flat(Infinity);
+      _filteredData = [ ..._filteredData ].filter(item => selectedNames.includes(item.nameLabel as string));
+      _hasFilters = true;
+    }
+    if ([ ...filters?.genders ].length !== 0) {
+      const selectedGenders = [ ...filters.genders ].flat(Infinity);
+      _filteredData = [ ..._filteredData ].filter(item => selectedGenders.includes(item.genderLabel as Gender));
+      _hasFilters = true;
+    }
+    setFilteredData(_filteredData);
+    setHasFilters(_hasFilters);
+  }, [ filters ]);
+
   const handleSaveData = async ( valuesToSave: Partial<IMarvelHeroesData> ) => {
-    // console.log('valuesToSave', valuesToSave);
-    const updatedData = data.map(item => {
+    const updatedData = await data.map(item => {
       if (item.id === valuesToSave.id) {
         return {
           ...item,
@@ -55,10 +75,13 @@ export const TestPage1Provider = ({
   const contextValue = {
     data,
     filteredData,
+    filters,
     handleSaveData,
+    hasFilters,
+    initFiltersData,
     isModalOpen,
     selectedData,
-    setFilteredData,
+    setFilters,
     setIsModalOpen,
     setSelectedData
   };

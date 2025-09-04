@@ -1,14 +1,18 @@
 import { MuiTable } from 'src/components/Organisms/MuiTable';
 import { useTestPage1Context } from 'src/context';
 
-import { headerCells } from './utils/helper';
-import { MarvelHeroModal } from 'src/components/Modals';
 import type { IMarvelHeroesData } from 'src/interfaces';
+import { headerCells } from './utils/helper';
+
+import { MarvelHeroModal } from 'src/components/Modals';
+import { MarvelHeroesFilters } from './components';
 
 export const MuiTableTab = () => {
   const {
     data,
+    filteredData,
     handleSaveData,
+    hasFilters,
     isModalOpen,
     selectedData,
     setIsModalOpen,
@@ -23,12 +27,18 @@ export const MuiTableTab = () => {
     setIsModalOpen(isModalOpen => !isModalOpen);
   };
 
+  console.log('hasFilters', hasFilters);
   return (
     <>
       <MuiTable
         headerCells={headerCells}
-        rowsData={data}
         onRowClick={ handleRowClick }
+        rowsData={hasFilters ? filteredData : data}
+        toolbarChildren={
+          <MarvelHeroesFilters
+            isDisabled={/*isLoading ||*/ !data || data?.length === 0}
+          />
+        }
       />
       <MarvelHeroModal
         data={ selectedData }

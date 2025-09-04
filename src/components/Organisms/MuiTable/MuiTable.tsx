@@ -10,14 +10,15 @@ import TableContainer from '@mui/material/TableContainer';
 import TablePagination from '@mui/material/TablePagination';
 import TableRow from '@mui/material/TableRow';
 
+import { GREY_200, GREY_50, GREY_600 } from 'src/constants/colors';
 import type { Order } from 'src/interfaces';
+import { getComparator } from './utils';
 
 import {
   MuiTableHeader,
   MuiTableToolbar
 } from './components';
 import type { MuiTableProps } from './MuiTableProps';
-import { getComparator } from './utils';
 
 /**
  * MuiTable displays a `MUI Table` component.
@@ -26,6 +27,8 @@ export const MuiTable = <T extends object>({
   headerCells,
   onRowClick,
   rowsData,
+  toolbarChildren,
+  toolbarTitle = ''
 }: MuiTableProps<T>) => {
   const [ order, setOrder ] = useState<Order>('asc');
   const [ orderBy, setOrderBy ] = useState<keyof T>(headerCells[0]?.field);
@@ -60,7 +63,6 @@ export const MuiTable = <T extends object>({
 
   /**
    * Memoized visible rows data based on current page and rows per page.
-   * This improves performance by preventing unnecessary recalculations on re-renders.
    */
   const visibleRowsData = useMemo(
     () =>
@@ -74,11 +76,15 @@ export const MuiTable = <T extends object>({
     <Box sx={{ width: '100%' }}>
       <Paper 
         sx={{ 
+          borderBottom: `1px solid ${GREY_600} !important`,
+          mb: 2,
           width: '100%',
-          mb: 2
         }}
       >
-        <MuiTableToolbar />
+        <MuiTableToolbar
+          children={ toolbarChildren }
+          title={ toolbarTitle }
+        />
         <TableContainer>
           <Table
             aria-labelledby='mui-table'
@@ -100,7 +106,15 @@ export const MuiTable = <T extends object>({
                         onRowClick(rowData);
                       }
                     }}
-                    sx={{ cursor: 'pointer' }}
+                    sx={{ 
+                      cursor: 'pointer',
+                      '&:nth-of-type(even)': {
+                        backgroundColor: GREY_50
+                      },
+                      '&.MuiTableRow-root:hover': {
+                        backgroundColor: GREY_200
+                      }
+                    }}
                     tabIndex={-1}
                   > 
                     {
@@ -141,13 +155,13 @@ export const MuiTable = <T extends object>({
           </Table>
         </TableContainer>
         <TablePagination
-          rowsPerPageOptions={[10, 20, 25]}
           component='div'
           count={rowsData.length}
-          rowsPerPage={rowsPerPage}
-          page={page}
           onPageChange={handleChangePage}
           onRowsPerPageChange={handleChangeRowsPerPage}
+          page={page}
+          rowsPerPage={rowsPerPage}
+          rowsPerPageOptions={[10, 20, 25]}
         />
       </Paper>
     </Box>

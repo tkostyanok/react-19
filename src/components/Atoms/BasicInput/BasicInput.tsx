@@ -2,7 +2,6 @@ import Box from '@mui/material/Box';
 import TextField from '@mui/material/TextField';
 
 import { BasicLabel } from '../BasicLabel';
-
 import { BasicInputLoading } from './BasicInputLoading';
 import type { BasicInputProps } from './BasicInputProps';
 

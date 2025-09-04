@@ -1,3 +1,1 @@
 export * from './MarvelHeroesFiltersModal';
-export * from './MarvelHeroModal';
-

@@ -2,9 +2,9 @@ import Box from '@mui/material/Box';
 import Skeleton from '@mui/material/Skeleton';
 
 /**
- * BasicInput loading skeleton.
+ * BasicSelect loading skeleton.
  */
-export const BasicInputLoading = () => {
+export const BasicSelectLoading = () => {
   return (
     <Box
       display='grid'

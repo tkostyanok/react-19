@@ -1,18 +1,11 @@
-import type { MouseEvent } from 'react';
-
-import TableSortLabel from '@mui/material/TableSortLabel';
 import TableCell from '@mui/material/TableCell';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
+import TableSortLabel from '@mui/material/TableSortLabel';
 
-import type { MuiTableHeaderCell, Order } from 'src/interfaces';
+import { GREY_300, GREY_600 } from 'src/constants/colors';
 
-interface MuiTableHeaderProps<T extends object> {
-  headerCells: readonly MuiTableHeaderCell<T>[];
-  onRequestSort: (event: MouseEvent<unknown>, property: keyof T) => void;
-  order: Order;
-  orderBy?: keyof T;
-}
+import type { MuiTableHeaderProps } from './MuiTableHeaderProps';
 
 export const  MuiTableHeader = <T extends object>({
   headerCells,
@@ -27,7 +20,13 @@ export const  MuiTableHeader = <T extends object>({
 
   return (
     <TableHead>
-      <TableRow>
+      <TableRow
+        sx={{
+          backgroundColor: GREY_300,
+          borderBottom: `2px solid ${GREY_600}`,
+          borderTop: `2px solid ${GREY_600}`
+        }}
+      >
         {headerCells.map((headerCell) => (
           <TableCell
             key={headerCell.field}

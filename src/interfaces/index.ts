@@ -1,1 +1,2 @@
-export * from './ITestPage1';
+export * from './CommonTypes';
+export * from './TestPage1Types';

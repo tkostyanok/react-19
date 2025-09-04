@@ -1,12 +1,21 @@
 import type { TableCellProps } from '@mui/material/TableCell';
+import type { Gender } from './CommonTypes';
 
-type TGender = 'male' | 'female';
+export type HeroDataValues = {
+  names: Set<string> | string[] | [];
+  // citizenries: Set<string> | string[] | [];
+  // creators: Set<string> | string[] | [];
+  genders: Set<string> | string[] | [];
+  // members: Set<string> | string[] | [];
+  // occupations: Set<string> | string[] | [];
+  // skills: Set<string> | string[] | [];
+};
 
 export interface IMarvelHeroesData {
   nameLabel: string | null,
   citizenshipLabel: string | null,
   creatorLabel: string | null,
-  genderLabel: TGender | null,
+  genderLabel: Gender | null,
   id: string | null,
   memberOfLabel: string | null,
   occupationLabel: string | null,
@@ -47,5 +56,3 @@ export interface MuiTableHeaderCell<T extends object> {
    */
   width?: number;
 }
-
-export type Order = 'asc' | 'desc';

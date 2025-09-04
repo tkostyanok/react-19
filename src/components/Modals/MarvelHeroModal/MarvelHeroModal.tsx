@@ -1,4 +1,4 @@
-import { useEffect, useState, type SyntheticEvent } from 'react';
+import { useEffect, useState, type ChangeEvent, type SyntheticEvent } from 'react';
 import { v4 } from 'uuid';
 
 import {
@@ -48,7 +48,11 @@ export const MarvelHeroModal = ({
     }
   }, [ data ]);
 
-  const handleChange = (event: SyntheticEvent) => {
+  const handleChange = (
+    event: SyntheticEvent 
+      | ChangeEvent<HTMLInputElement> 
+      | (Event & { target: { value: unknown; name: string; }; })
+  ) => {
     const target = event.target as HTMLInputElement;
 
     setHeroDataValues((prevValues: IMarvelHeroesData) => ({
@@ -105,8 +109,8 @@ export const MarvelHeroModal = ({
       </DialogContent>
       <ModalFooter
         isDisabled={ !isDataChanged }
-        onSubmit={ handleSubmit }
         onClose={ onClose }
+        onSubmit={ handleSubmit }
       />
     </Dialog>
   );

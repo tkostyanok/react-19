@@ -1,11 +1,10 @@
-import type { MuiTableHeaderCell } from 'src/interfaces';
+import type { MouseEvent } from 'react';
+
+import type { MuiTableHeaderCell, Order } from 'src/interfaces';
 
 export interface MuiTableHeaderProps<T extends object> {
-  // numSelected: number;
-  // onRequestSort: (event: React.MouseEvent<unknown>, property: keyof Data) => void;
-  // onSelectAllClick: (event: React.ChangeEvent<HTMLInputElement>) => void;
-  // order: Order;
-  // orderBy: Order;
-  // rowCount: number;
   headerCells: readonly MuiTableHeaderCell<T>[];
+  onRequestSort: (event: MouseEvent<unknown>, property: keyof T) => void;
+  order: Order;
+  orderBy?: keyof T;
 }

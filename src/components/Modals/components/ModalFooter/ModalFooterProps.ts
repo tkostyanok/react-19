@@ -13,4 +13,9 @@ export interface ModalFooterProps {
    * Callback function to submit data.
    */
   onSubmit: () => void;
+  /**
+   * Text for the submit button.
+   * @default 'Save'
+   */
+  submitButtonText?: string;
 }

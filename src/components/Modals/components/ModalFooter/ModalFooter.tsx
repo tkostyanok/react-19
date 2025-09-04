@@ -6,7 +6,8 @@ import type { ModalFooterProps } from './ModalFooterProps';
 export const ModalFooter = ({
   isDisabled = false,
   onClose,
-  onSubmit
+  onSubmit,
+  submitButtonText = 'Save'
 }: ModalFooterProps) => {
 
   return (
@@ -15,17 +16,17 @@ export const ModalFooter = ({
         color='primary'
         disabled={ isDisabled }
         onClick={ onSubmit }
+        size='small'
         type='submit'
         variant='contained'
-        size='small'
       >
-        Save
+        {submitButtonText}
       </Button>
       <Button
         color='error'
         onClick={ onClose }
-        variant='text'
         size='small'
+        variant='text'
       >
         Cancel
       </Button>
