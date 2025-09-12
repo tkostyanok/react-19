@@ -12,7 +12,7 @@ import { TestPage1Context } from './TestPage1Context';
 
 interface ITestPage1ProviderProps {
   children?: ReactNode;
-  initData?: IMarvelHeroesData[];
+  initData?: Omit<IMarvelHeroesData, 'id'>[];
 }
 
 export const TestPage1Provider = ({
@@ -32,7 +32,7 @@ export const TestPage1Provider = ({
     }
 
     const _data =  initData
-      .map((item: IMarvelHeroesData) => {
+      .map((item: Omit<IMarvelHeroesData, 'id'>) => {
         return {
           ...item,
           id: v4() // Ensure unique IDs,
@@ -60,15 +60,20 @@ export const TestPage1Provider = ({
   }, [ filters ]);
 
   const handleSaveData = async ( valuesToSave: Partial<IMarvelHeroesData> ) => {
-    const updatedData = await data.map(item => {
-      if (item.id === valuesToSave.id) {
-        return {
-          ...item,
-          ...valuesToSave
-        };
-      }
-      return item;
-    });
+    const updatedData = await valuesToSave.id === null
+      ? [ ...data].concat({
+          ...valuesToSave,
+          id: v4() // Ensure unique IDs
+        } as IMarvelHeroesData)
+      : data.map(item => {
+          if (item.id === valuesToSave.id) {
+            return {
+              ...item,
+              ...valuesToSave
+            };
+          }
+          return item;
+        });
     setData(updatedData);
   }
 

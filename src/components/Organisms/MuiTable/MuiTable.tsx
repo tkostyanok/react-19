@@ -118,27 +118,24 @@ export const MuiTable = <T extends object>({
                     tabIndex={-1}
                   > 
                     {
-                      Object.keys(rowData).map((key, cellIndex) => {
-                        if(headerCellsMap.includes(key as Extract<keyof T, string>)) {
-                          return (
-                            <TableCell
-                              key={`table-row-${rowIndex}-cell-${key}`}
-                              sx={{
-                                maxWidth: headerCells[cellIndex]?.width ? `${headerCells[cellIndex]?.width}px` : 'none',
-                                minWidth: headerCells[cellIndex]?.width ? `${headerCells[cellIndex]?.width}px` : 'auto',
-                                overflow: 'hidden',
-                                padding: '16px 10px',
-                                textOverflow: 'ellipsis',
-                                width: headerCells[cellIndex]?.width ? `${headerCells[cellIndex]?.width}px` : 'auto',
-                                whiteSpace: 'nowrap',
-                              }}
-                            >
-                              {`${rowData[key as keyof T]}`}
-                            </TableCell>
-                          );
-                        }
+                      headerCellsMap.map((key, cellIndex) => {
+                        return (
+                          <TableCell
+                            key={`table-row-${rowIndex}-cell-${key}`}
+                            sx={{
+                              maxWidth: headerCells[cellIndex]?.width ? `${headerCells[cellIndex]?.width}px` : 'none',
+                              minWidth: headerCells[cellIndex]?.width ? `${headerCells[cellIndex]?.width}px` : 'auto',
+                              overflow: 'hidden',
+                              padding: '16px 10px',
+                              textOverflow: 'ellipsis',
+                              width: headerCells[cellIndex]?.width ? `${headerCells[cellIndex]?.width}px` : 'auto',
+                              whiteSpace: 'nowrap',
+                            }}
+                          >
+                            {rowData[key as keyof T] !== null ?`${rowData[key as keyof T]}` : '-'}
+                          </TableCell>
+                        );
                       })
-
                     }
                   </TableRow>
                 );

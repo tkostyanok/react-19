@@ -96,6 +96,7 @@ export const MarvelHeroesFiltersModal = ({
             <BasicAutocomplete
               disabled={ [ ...heroDataValues[`${item}`] ].length === 0 }
               id={`${item}`}
+              key={`filters-${item}`}
               label={firstLetterCapitalize(`${item}`)}
               onChange={(event, value, reason, details) =>
                 handleChange(event, value, reason, `${item}`,  details)

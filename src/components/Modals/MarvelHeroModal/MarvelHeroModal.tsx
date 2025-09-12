@@ -1,5 +1,4 @@
 import { useEffect, useState, type ChangeEvent, type SyntheticEvent } from 'react';
-import { v4 } from 'uuid';
 
 import {
   useMediaQuery, useTheme
@@ -9,6 +8,7 @@ import DialogContent from '@mui/material/DialogContent';
 
 import type { IMarvelHeroesData } from 'src/interfaces';
 import { getModificationsFromSimpleObjects, isEmptyObject } from 'src/utils';
+import { initialMarvelHero } from './utils';
 
 import { ModalFooter, ModalHeader } from '../components';
 import { MarvelHeroInfo } from './components';
@@ -27,26 +27,19 @@ export const MarvelHeroModal = ({
   // TODO: Optimize with add translation
   const title = isNewHero ? 'Add New Hero' : 'Marvel Hero Details';
 
-  const [ heroDataValues, setHeroDataValues ] = useState<IMarvelHeroesData>({
-    nameLabel: null,
-    citizenshipLabel: null,
-    creatorLabel: null,
-    genderLabel: null,
-    id: null,
-    memberOfLabel: null,
-    occupationLabel: null,
-    skillsLabel: null,
-  });
+  const [ heroDataValues, setHeroDataValues ] = useState<IMarvelHeroesData>(initialMarvelHero);
   const [ isDataChanged, setIsDataChanged ] = useState(false);
 
   useEffect(() => {
-    if (!isEmptyObject(data)) {
+    if (isNewHero) {
+      setHeroDataValues(initialMarvelHero);
+    } else if (!isEmptyObject(data)) {
       setHeroDataValues((prevValues: IMarvelHeroesData) => ({
         ...prevValues,
         ...data
       }));
     }
-  }, [ data ]);
+  }, [ data, isNewHero ]);
 
   const handleChange = (
     event: SyntheticEvent 
@@ -64,15 +57,11 @@ export const MarvelHeroModal = ({
 
   const handleSubmit = async () => {
     const modifiedValues = isNewHero
-      ? {
-        ...heroDataValues,
-        id: v4() // Ensure unique IDs
-      }
-      : 
-      getModificationsFromSimpleObjects(
-        data || {}, 
-        heroDataValues
-      );
+      ? { ...heroDataValues }
+      : getModificationsFromSimpleObjects(
+          data || {}, 
+          heroDataValues
+        );
 
     // If no changes detected, do not proceed
     if (isEmptyObject(modifiedValues)) {
