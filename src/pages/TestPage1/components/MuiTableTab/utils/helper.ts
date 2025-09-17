@@ -12,7 +12,7 @@ export const headerCells: MuiTableHeaderCell<IMarvelHeroesData>[] = [
   {
     field: 'genderLabel',
     headerName: 'Gender',
-    width: 80,
+    width: 100,
   },
   {
     field: 'citizenshipLabel',

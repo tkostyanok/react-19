@@ -1,5 +1,6 @@
 import { useEffect, useState, type SyntheticEvent } from 'react';
 
+import Grid from '@mui/material/Grid';
 import {
   useMediaQuery, useTheme,
   type AutocompleteChangeDetails,
@@ -9,8 +10,8 @@ import Dialog from '@mui/material/Dialog';
 import DialogContent from '@mui/material/DialogContent';
 
 import { useTestPage1Context } from 'src/context';
-import type { Gender, HeroDataValues } from 'src/interfaces';
-import { firstLetterCapitalize, isEmptyObject } from 'src/utils';
+import type { Gender, HeroDataValues, IMarvelHeroesData } from 'src/interfaces';
+import { isEmptyObject } from 'src/utils';
 
 import { BasicAutocomplete } from 'src/components/Atoms';
 import { ModalFooter, ModalHeader } from '../components';
@@ -23,26 +24,37 @@ export const MarvelHeroesFiltersModal = ({
 }: MarvelHeroesFiltersModalProps) => {
   const theme = useTheme();
   const fullScreen = useMediaQuery(theme.breakpoints.down('sm'));
-    const {
-      data,
-      filters,
-      initFiltersData,
-      setFilters,
-    } = useTestPage1Context();
+  // TODO: Optimize with add translation
+  const LABELS: {[key in keyof Omit<IMarvelHeroesData, 'id'>]: string} = {
+    nameLabel: 'Name',
+    genderLabel: 'Gender',
+    citizenshipLabel: 'Citizenship',
+    skillsLabel: 'Skills',
+    occupationLabel: 'Occupation',
+    memberOfLabel: 'Member of',
+    creatorLabel: 'Creator'
+  } as const;
 
-  const [ heroDataValues, setHeroDataValues ] = useState<HeroDataValues>(initFiltersData);
+  const {
+    data,
+    filters,
+    initFiltersData,
+    setFilters,
+  } = useTestPage1Context();
+
+  const [ heroDataValues, setHeroDataValues ] = useState<Omit<HeroDataValues, 'id'>>(initFiltersData);
   const [ isDataChanged, setIsDataChanged ] = useState(false);
-  const [ autocompleteFilters, setAutocompleteFilters ] = useState<HeroDataValues>(initFiltersData);
+  const [ autocompleteFilters, setAutocompleteFilters ] = useState<Omit<HeroDataValues, 'id'>>(initFiltersData);
 
   useEffect(() => {
     if (!isEmptyObject(data)) {
       const names = data?.map(item => item.nameLabel).filter((v): v is string => !!v).sort() ?? [];
        const genders = data?.map(item => item.genderLabel).filter((v): v is Gender => !!v) ?? [];
 
-      setHeroDataValues((prevValues: HeroDataValues) => ({
+      setHeroDataValues((prevValues: Omit<HeroDataValues, 'id'>) => ({
         ...prevValues,
-        names: new Set(names),
-        genders: new Set(genders),
+        nameLabel: new Set(names),
+        genderLabel: new Set(genders),
       }));
     }
   }, [ data ]);
@@ -60,7 +72,7 @@ export const MarvelHeroesFiltersModal = ({
     field: string,
     _details?: AutocompleteChangeDetails<string[] | number[]>,
   ) => {
-    setAutocompleteFilters((prevValues: HeroDataValues) => ({
+    setAutocompleteFilters((prevValues: Omit<HeroDataValues, 'id'>) => ({
       ...prevValues,
       [field]: value || []
     }));
@@ -73,7 +85,6 @@ export const MarvelHeroesFiltersModal = ({
   };
 
   const handleSubmit = async () => {
-    // console.log('Filters applied:', heroDataValues);
     setFilters(autocompleteFilters);
     handleClose();
   };
@@ -91,45 +102,35 @@ export const MarvelHeroesFiltersModal = ({
         title='Marvel Heroes Filters'
       />
       <DialogContent dividers>
-        {
-          (['names', 'genders'] as const).map((item) => (
-            <BasicAutocomplete
-              disabled={ [ ...heroDataValues[`${item}`] ].length === 0 }
-              id={`${item}`}
-              key={`filters-${item}`}
-              label={firstLetterCapitalize(`${item}`)}
-              onChange={(event, value, reason, details) =>
-                handleChange(event, value, reason, `${item}`,  details)
-              }
-              // options={
-              //   Array.isArray(heroDataValues.names)
-              //     ? heroDataValues.names.map(name => [name])
-              //     : Array.from(heroDataValues.names).map(name => [name])
-              // }
-              // value={[ ...autocompleteFilters.names ] as any}
-              options={
-                Array.isArray(heroDataValues[`${item}`])
-                  ? [ ...heroDataValues[`${item}`] ].map(name => [name])
-                  : Array.from(heroDataValues[`${item}`]).map(name => [name])
-              }
-              value={[ ...autocompleteFilters[`${item}`] ] as any}
-            />
-          ))
-        }
-        <BasicAutocomplete
-          disabled={ [ ...heroDataValues.names ].length === 0 }
-          id='names'
-          label='Names'
-          onChange={(event, value, reason, details) =>
-            handleChange(event, value, reason, 'names',  details)
+        <Grid
+          container
+          spacing={ 2 }
+        >
+          {
+            (['nameLabel', 'genderLabel'] as const).map((item) => (
+              <Grid
+                key={`filters-${item}`}
+                size={ 12 }
+              >
+                <BasicAutocomplete
+                  disabled={ [ ...heroDataValues[`${item}`] ].length === 0 }
+                  id={`basic-autocomplete-${item}`}
+                  label={LABELS[item]}
+                  onChange={(event, value, reason, details) =>
+                    handleChange(event, value, reason, `${item}`,  details)
+                  }
+                  options={
+                    Array.isArray(heroDataValues[`${item}`])
+                      ? [ ...heroDataValues[`${item}`] ].map(name => [name])
+                      : Array.from(heroDataValues[`${item}`]).map(name => [name])
+                  }
+                  size='small'
+                  value={[ ...autocompleteFilters[`${item}`] ] as any} // Todo: fix any
+                />
+              </Grid>
+            ))
           }
-          options={
-            Array.isArray(heroDataValues.names)
-              ? heroDataValues.names.map(name => [name])
-              : Array.from(heroDataValues.names).map(name => [name])
-          }
-          value={[ ...autocompleteFilters.names ] as any}
-        />
+        </Grid>
       </DialogContent>
       <ModalFooter
         isDisabled={ !isDataChanged }

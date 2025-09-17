@@ -1,11 +1,11 @@
 import type { HeroDataValues } from 'src/interfaces';
 
-export const initFiltersData: HeroDataValues = {
-  names: [],
-  // citizenries: [],
-  // creators: [],
-  genders: [],
-  // members: [],
-  // occupations: [],
-  // skills: [],
+export const initFiltersData: Omit<HeroDataValues, 'id'> = {
+  nameLabel: [],
+  citizenshipLabel: [],
+  creatorLabel: [],
+  genderLabel: [],
+  memberOfLabel: [],
+  occupationLabel: [],
+  skillsLabel: [],
 };

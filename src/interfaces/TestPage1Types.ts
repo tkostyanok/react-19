@@ -2,13 +2,7 @@ import type { TableCellProps } from '@mui/material/TableCell';
 import type { Gender } from './CommonTypes';
 
 export type HeroDataValues = {
-  names: Set<string> | string[] | [];
-  // citizenries: Set<string> | string[] | [];
-  // creators: Set<string> | string[] | [];
-  genders: Set<string> | string[] | [];
-  // members: Set<string> | string[] | [];
-  // occupations: Set<string> | string[] | [];
-  // skills: Set<string> | string[] | [];
+  [K in keyof IMarvelHeroesData]: Set<string> | string[] | [];
 };
 
 export interface IMarvelHeroesData {
@@ -38,6 +32,7 @@ export interface ITestTask1 {
 }
 
 export interface MuiTableHeaderCell<T extends object> {
+  // TODO: Check if I need `align` property?
   /**
    * Align cell content.
    * Possible values: 'center' | 'left' | 'right' | 'justify' | 'inherit'
@@ -47,6 +42,10 @@ export interface MuiTableHeaderCell<T extends object> {
    * The unique identifier of the column.
    */
   field: Extract<keyof T, string>;
+  /**
+   * The filter values applied to this column.
+   */
+  filters?: Set<string> | string[] | [];
   /**
    * The title displayed in the column header cell.
    */

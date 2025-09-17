@@ -1,28 +1,25 @@
-import { useState } from 'react';
-
+import FilterListIcon from '@mui/icons-material/FilterList';
 import IconButton, { type IconButtonProps } from '@mui/material/IconButton';
 import Tooltip from '@mui/material/Tooltip';
-import FilterListIcon from '@mui/icons-material/FilterList';
 
-import { MarvelHeroesFiltersModal } from 'src/components/Modals';
+import type { MarvelHeroesFiltersProps } from './MarvelHeroesFiltersProps';
 
-export const MarvelHeroesFilters = ({ ...props }: IconButtonProps) => {
-  const [ openFiltersModal, setOpenFiltersModal ] = useState(false);
+export const MarvelHeroesFilters = ({
+  openModal,
+  ...props
+}: MarvelHeroesFiltersProps & IconButtonProps) => {
+  const handleOpenModal = () => {
+    openModal(prevState => !prevState);
+  };
   
   return (
-    <>
-      <Tooltip title='Filters'>
-        <IconButton
-          onClick={() => setOpenFiltersModal(true)}
-          {...props}
-        >
-          <FilterListIcon fontSize='small' />
-        </IconButton>
-      </Tooltip>
-      <MarvelHeroesFiltersModal
-        open={ openFiltersModal }
-        onClose={() => setOpenFiltersModal(false)}
-      />
-    </>
+    <Tooltip title='Filters'>
+      <IconButton
+        onClick={handleOpenModal}
+        {...props}
+      >
+        <FilterListIcon fontSize='small' />
+      </IconButton>
+    </Tooltip>
   );
 }

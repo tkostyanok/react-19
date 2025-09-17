@@ -21,7 +21,7 @@ export const TestPage1Provider = ({
 }: ITestPage1ProviderProps) => {
   const [ data, setData ] = useState<IMarvelHeroesData[]>([]);
   const [ hasFilters, setHasFilters ] = useState(false);
-  const [ filters, setFilters ] = useState<HeroDataValues>(initFiltersData);
+  const [ filters, setFilters ] = useState<Omit<HeroDataValues, 'id'>>(initFiltersData);
   const [ filteredData, setFilteredData ] = useState<IMarvelHeroesData[]>([]);
   const [ isModalOpen, setIsModalOpen ] = useState(false);
   const [ selectedData, setSelectedData ] = useState<IMarvelHeroesData | null>(null);
@@ -45,13 +45,13 @@ export const TestPage1Provider = ({
     let _filteredData = data;
 
     let _hasFilters = false;
-    if ([ ...filters?.names ].length !== 0) {
-      const selectedNames = [ ...filters.names ].flat(Infinity);
+    if ([ ...filters?.nameLabel ].length !== 0) {
+      const selectedNames = [ ...filters.nameLabel ].flat(Infinity);
       _filteredData = [ ..._filteredData ].filter(item => selectedNames.includes(item.nameLabel as string));
       _hasFilters = true;
     }
-    if ([ ...filters?.genders ].length !== 0) {
-      const selectedGenders = [ ...filters.genders ].flat(Infinity);
+    if ([ ...filters?.genderLabel ].length !== 0) {
+      const selectedGenders = [ ...filters.genderLabel ].flat(Infinity);
       _filteredData = [ ..._filteredData ].filter(item => selectedGenders.includes(item.genderLabel as Gender));
       _hasFilters = true;
     }
@@ -59,12 +59,24 @@ export const TestPage1Provider = ({
     setHasFilters(_hasFilters);
   }, [ filters ]);
 
+  const handleDeleteFilter = (filter: keyof Omit<HeroDataValues, 'id'>, value: string) => {
+    setFilters(prevFilters => ({
+      ...prevFilters,
+      [filter]: [ ...prevFilters[filter] ].filter(item => item !== value)
+    }));
+  };
+
+  // Save or Update data
   const handleSaveData = async ( valuesToSave: Partial<IMarvelHeroesData> ) => {
     const updatedData = await valuesToSave.id === null
-      ? [ ...data].concat({
-          ...valuesToSave,
-          id: v4() // Ensure unique IDs
-        } as IMarvelHeroesData)
+      ? [
+          {
+            ...valuesToSave,
+            id: v4() // Ensure unique IDs
+          } as IMarvelHeroesData,
+          ...data
+        ]
+
       : data.map(item => {
           if (item.id === valuesToSave.id) {
             return {
@@ -81,6 +93,7 @@ export const TestPage1Provider = ({
     data,
     filteredData,
     filters,
+    handleDeleteFilter,
     handleSaveData,
     hasFilters,
     initFiltersData,

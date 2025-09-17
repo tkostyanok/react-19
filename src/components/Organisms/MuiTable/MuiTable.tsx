@@ -25,13 +25,15 @@ import type { MuiTableProps } from './MuiTableProps';
  */
 export const MuiTable = <T extends object>({
   headerCells,
+  onFilterClick,
+  onFilterDelete,
   onRowClick,
   rowsData,
   toolbarChildren,
   toolbarTitle = ''
 }: MuiTableProps<T>) => {
   const [ order, setOrder ] = useState<Order>('asc');
-  const [ orderBy, setOrderBy ] = useState<keyof T>(headerCells[0]?.field);
+  const [ orderBy, setOrderBy ] = useState<keyof T | undefined>(undefined);
   const [ page, setPage ] = useState(0);
   const [ rowsPerPage, setRowsPerPage ] = useState(10);
 
@@ -55,19 +57,16 @@ export const MuiTable = <T extends object>({
     setOrderBy(property);
   };
 
-  /**
-   * Avoid a layout jump when reaching the last page with empty rows.
-   */
+  
+  //  Avoid a layout jump when reaching the last page with empty rows.
   const emptyRows =
     page > 0 ? Math.max(0, (1 + page) * rowsPerPage - rowsData.length) : 0;
 
-  /**
-   * Memoized visible rows data based on current page and rows per page.
-   */
+  // Memoized visible rows data based on current page and rows per page.
   const visibleRowsData = useMemo(
     () =>
       [ ...rowsData ]
-        .sort(getComparator<T>(order, orderBy))
+        .sort(orderBy ? getComparator<T>(order, orderBy) : undefined)
         .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage),
     [ order, orderBy, page, rowsPerPage, rowsData ],
   );
@@ -91,6 +90,8 @@ export const MuiTable = <T extends object>({
           >
             <MuiTableHeader
               headerCells={headerCells}
+              onFilterClick={onFilterClick}
+              onFilterDelete={onFilterDelete}
               order={order}
               orderBy={orderBy}
               onRequestSort={handleRequestSort}
