@@ -11,7 +11,7 @@ export const MarvelHeroInfo = ({
   onChange
 }: MarvelHeroInfoProps) => {
   // TODO: Optimize with add translation
-  const LABELS: {[key in keyof Omit<IMarvelHeroesData, 'id'>]: string} = {
+  const LABELS: {[key in keyof IMarvelHeroesData]: string} = {
     nameLabel: 'Name',
     genderLabel: 'Gender',
     citizenshipLabel: 'Citizenship',

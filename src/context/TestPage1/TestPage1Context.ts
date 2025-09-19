@@ -7,28 +7,30 @@ import {
   useContext 
 } from 'react';
 
-import type { HeroDataValues, IMarvelHeroesData } from 'src/interfaces';
+import type { IMarvelHeroTableData, MarvelHeroFilterValues } from 'src/interfaces';
 import { initFiltersData } from './utils';
  
 interface ITestPage1Context {
-  data: IMarvelHeroesData[];
-  filteredData: IMarvelHeroesData[];
-  filters: Omit<HeroDataValues, 'id'>;
-  handleDeleteFilter: ( filter: keyof Omit<HeroDataValues, 'id'>, value: string ) => void;
-  handleSaveData: ( valuesToSave: Partial<IMarvelHeroesData> ) => Promise<void>;
+  data: IMarvelHeroTableData[];
+  filteredData: IMarvelHeroTableData[];
+  filters: MarvelHeroFilterValues;
+  handleDeleteData: ( dataToDelete: IMarvelHeroTableData ) => void;
+  handleDeleteFilter: ( filter: keyof MarvelHeroFilterValues, value: string ) => void;
+  handleSaveData: ( dataToSave: Partial<IMarvelHeroTableData> ) => Promise<void>;
   hasFilters: boolean;
-  initFiltersData: Omit<HeroDataValues, 'id'>;
+  initFiltersData: MarvelHeroFilterValues;
   isModalOpen: boolean;
-  selectedData: IMarvelHeroesData | null;
-  setFilters: Dispatch<SetStateAction<Omit<HeroDataValues, 'id'>>>;
+  selectedData: IMarvelHeroTableData | null;
+  setFilters: Dispatch<SetStateAction<MarvelHeroFilterValues>>;
   setIsModalOpen: Dispatch<SetStateAction<boolean>>;
-  setSelectedData: Dispatch<SetStateAction<IMarvelHeroesData | null>>;
+  setSelectedData: Dispatch<SetStateAction<IMarvelHeroTableData | null>>;
 }
 
 export const TestPage1Context = createContext<ITestPage1Context>({
   data: [],
   filteredData: [],
   filters: initFiltersData,
+  handleDeleteData: () => {},
   handleDeleteFilter: () => {},
   handleSaveData: async () => {},
   hasFilters: false,

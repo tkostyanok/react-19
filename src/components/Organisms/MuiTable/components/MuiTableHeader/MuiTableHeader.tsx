@@ -47,11 +47,16 @@ export const  MuiTableHeader = <T extends object>({
             }}
           >
             {headerCell.headerName}
-            <TableSortLabel
-              active={orderBy === headerCell.field}
-              direction={orderBy === headerCell.field ? order : 'asc'}
-              onClick={createSortHandler(headerCell.field)}
-            />
+            {headerCell?.field !== 'actions'
+              ? (
+                <TableSortLabel
+                  active={orderBy === headerCell.field}
+                  direction={orderBy === headerCell.field ? order : 'asc'}
+                  onClick={createSortHandler(headerCell.field)}
+                />
+              )
+              : null
+            }
             {
               headerCell?.filters && [ ...headerCell?.filters ]?.length > 0
                 ? (

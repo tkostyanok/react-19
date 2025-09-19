@@ -1,4 +1,4 @@
-import type { MouseEvent } from 'react';
+import type { MouseEvent, SyntheticEvent } from 'react';
 import { useMemo, useState } from 'react';
 
 import Box from '@mui/material/Box';
@@ -88,7 +88,7 @@ export const MuiTable = <T extends object>({
           <Table
             aria-labelledby='mui-table'
           >
-            <MuiTableHeader
+            <MuiTableHeader<T>
               headerCells={headerCells}
               onFilterClick={onFilterClick}
               onFilterDelete={onFilterDelete}
@@ -102,7 +102,13 @@ export const MuiTable = <T extends object>({
                   <TableRow
                     hover
                     key={`table-row-${rowIndex}`}
-                    onClick={() => {
+                    onClick={(event: SyntheticEvent) => {
+                      const target = event.target as HTMLElement;
+                      
+                      if (target.closest('button') || target.closest('a')) {
+                        return;
+                      }
+
                       if (onRowClick) {
                         onRowClick(rowData);
                       }
@@ -122,7 +128,7 @@ export const MuiTable = <T extends object>({
                       headerCellsMap.map((key, cellIndex) => {
                         return (
                           <TableCell
-                            key={`table-row-${rowIndex}-cell-${key}`}
+                            key={`mui-table-row-${rowIndex}-cell-${key}`}
                             sx={{
                               maxWidth: headerCells[cellIndex]?.width ? `${headerCells[cellIndex]?.width}px` : 'none',
                               minWidth: headerCells[cellIndex]?.width ? `${headerCells[cellIndex]?.width}px` : 'auto',
@@ -133,7 +139,15 @@ export const MuiTable = <T extends object>({
                               whiteSpace: 'nowrap',
                             }}
                           >
-                            {rowData[key as keyof T] !== null ?`${rowData[key as keyof T]}` : '-'}
+                            {
+                              rowData[key as keyof T] !== null 
+                                ? typeof rowData[key as keyof T] === 'string'
+                                  ?`${rowData[key as keyof T]}` 
+                                  : typeof rowData[key as keyof T] === 'object'
+                                    ? rowData[key as keyof T] as React.ReactNode
+                                    : '-'
+                                : '-'
+                            }
                           </TableCell>
                         );
                       })

@@ -2,12 +2,12 @@ import FilterListIcon from '@mui/icons-material/FilterList';
 import IconButton, { type IconButtonProps } from '@mui/material/IconButton';
 import Tooltip from '@mui/material/Tooltip';
 
-import type { MarvelHeroesFiltersProps } from './MarvelHeroesFiltersProps';
+import type { FiltersButtonProps } from './FiltersButtonProps';
 
-export const MarvelHeroesFilters = ({
+export const FiltersButton = ({
   openModal,
   ...props
-}: MarvelHeroesFiltersProps & IconButtonProps) => {
+}: FiltersButtonProps & IconButtonProps) => {
   const handleOpenModal = () => {
     openModal(prevState => !prevState);
   };
@@ -15,6 +15,7 @@ export const MarvelHeroesFilters = ({
   return (
     <Tooltip title='Filters'>
       <IconButton
+        aria-label='marvel-heroes-filter'
         onClick={handleOpenModal}
         {...props}
       >
@@ -22,4 +23,4 @@ export const MarvelHeroesFilters = ({
       </IconButton>
     </Tooltip>
   );
-}
+};

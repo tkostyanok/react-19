@@ -1,4 +1,4 @@
-import Button from '@mui/material/Button';
+import Button, { type ButtonProps } from '@mui/material/Button';
 import DialogActions from '@mui/material/DialogActions';
 
 import type { ModalFooterProps } from './ModalFooterProps';
@@ -7,8 +7,9 @@ export const ModalFooter = ({
   isDisabled = false,
   onClose,
   onSubmit,
-  submitButtonText = 'Save'
-}: ModalFooterProps) => {
+  submitButtonText = 'Save',
+  ...props
+}: ModalFooterProps & ButtonProps) => {
 
   return (
     <DialogActions>
@@ -19,6 +20,7 @@ export const ModalFooter = ({
         size='small'
         type='submit'
         variant='contained'
+        {...props}
       >
         {submitButtonText}
       </Button>

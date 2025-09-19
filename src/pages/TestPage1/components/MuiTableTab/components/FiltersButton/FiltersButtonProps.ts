@@ -1,4 +1,4 @@
-export interface MarvelHeroesFiltersProps {
+export interface FiltersButtonProps {
   /**
    * Callback fire to set the modal open state.
    */

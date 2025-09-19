@@ -6,7 +6,7 @@ import {
 import Dialog from '@mui/material/Dialog';
 import DialogContent from '@mui/material/DialogContent';
 
-import type { IMarvelHeroesData } from 'src/interfaces';
+import type { IMarvelHeroTableData } from 'src/interfaces';
 import { getModificationsFromSimpleObjects, isEmptyObject } from 'src/utils';
 import { initialMarvelHero } from './utils';
 
@@ -27,14 +27,14 @@ export const MarvelHeroModal = ({
   // TODO: Optimize with add translation
   const title = isNewHero ? 'Add New Hero' : 'Marvel Hero Details';
 
-  const [ heroDataValues, setHeroDataValues ] = useState<IMarvelHeroesData>(initialMarvelHero);
+  const [ heroFilterValues, setHeroFilterValues ] = useState<IMarvelHeroTableData>(initialMarvelHero);
   const [ isDataChanged, setIsDataChanged ] = useState(false);
 
   useEffect(() => {
     if (isNewHero) {
-      setHeroDataValues(initialMarvelHero);
+      setHeroFilterValues(initialMarvelHero);
     } else if (!isEmptyObject(data)) {
-      setHeroDataValues((prevValues: IMarvelHeroesData) => ({
+      setHeroFilterValues((prevValues: IMarvelHeroTableData) => ({
         ...prevValues,
         ...data
       }));
@@ -48,7 +48,7 @@ export const MarvelHeroModal = ({
   ) => {
     const target = event.target as HTMLInputElement;
 
-    setHeroDataValues((prevValues: IMarvelHeroesData) => ({
+    setHeroFilterValues((prevValues: IMarvelHeroTableData) => ({
       ...prevValues,
       [target.name]: target.value
     }));
@@ -57,10 +57,10 @@ export const MarvelHeroModal = ({
 
   const handleSubmit = async () => {
     const modifiedValues = isNewHero
-      ? { ...heroDataValues }
+      ? { ...heroFilterValues }
       : getModificationsFromSimpleObjects(
           data || {}, 
-          heroDataValues
+          heroFilterValues
         );
 
     // If no changes detected, do not proceed
@@ -92,7 +92,7 @@ export const MarvelHeroModal = ({
       />
       <DialogContent dividers>
         <MarvelHeroInfo
-          data={ heroDataValues }
+          data={ heroFilterValues }
           onChange={ handleChange }
         />
       </DialogContent>

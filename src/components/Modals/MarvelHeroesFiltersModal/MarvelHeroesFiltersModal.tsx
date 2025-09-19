@@ -10,7 +10,7 @@ import Dialog from '@mui/material/Dialog';
 import DialogContent from '@mui/material/DialogContent';
 
 import { useTestPage1Context } from 'src/context';
-import type { Gender, HeroDataValues, IMarvelHeroesData } from 'src/interfaces';
+import type { Gender, IMarvelHeroesData, MarvelHeroFilterValues } from 'src/interfaces';
 import { isEmptyObject } from 'src/utils';
 
 import { BasicAutocomplete } from 'src/components/Atoms';
@@ -25,7 +25,7 @@ export const MarvelHeroesFiltersModal = ({
   const theme = useTheme();
   const fullScreen = useMediaQuery(theme.breakpoints.down('sm'));
   // TODO: Optimize with add translation
-  const LABELS: {[key in keyof Omit<IMarvelHeroesData, 'id'>]: string} = {
+  const LABELS: {[key in keyof IMarvelHeroesData]: string} = {
     nameLabel: 'Name',
     genderLabel: 'Gender',
     citizenshipLabel: 'Citizenship',
@@ -42,16 +42,16 @@ export const MarvelHeroesFiltersModal = ({
     setFilters,
   } = useTestPage1Context();
 
-  const [ heroDataValues, setHeroDataValues ] = useState<Omit<HeroDataValues, 'id'>>(initFiltersData);
+  const [ heroFilterValues, setHeroFilterValues ] = useState<MarvelHeroFilterValues>(initFiltersData);
   const [ isDataChanged, setIsDataChanged ] = useState(false);
-  const [ autocompleteFilters, setAutocompleteFilters ] = useState<Omit<HeroDataValues, 'id'>>(initFiltersData);
+  const [ autocompleteFilters, setAutocompleteFilters ] = useState<MarvelHeroFilterValues>(initFiltersData);
 
   useEffect(() => {
     if (!isEmptyObject(data)) {
       const names = data?.map(item => item.nameLabel).filter((v): v is string => !!v).sort() ?? [];
        const genders = data?.map(item => item.genderLabel).filter((v): v is Gender => !!v) ?? [];
 
-      setHeroDataValues((prevValues: Omit<HeroDataValues, 'id'>) => ({
+      setHeroFilterValues((prevValues: MarvelHeroFilterValues) => ({
         ...prevValues,
         nameLabel: new Set(names),
         genderLabel: new Set(genders),
@@ -72,7 +72,7 @@ export const MarvelHeroesFiltersModal = ({
     field: string,
     _details?: AutocompleteChangeDetails<string[] | number[]>,
   ) => {
-    setAutocompleteFilters((prevValues: Omit<HeroDataValues, 'id'>) => ({
+    setAutocompleteFilters((prevValues: MarvelHeroFilterValues) => ({
       ...prevValues,
       [field]: value || []
     }));
@@ -113,16 +113,16 @@ export const MarvelHeroesFiltersModal = ({
                 size={ 12 }
               >
                 <BasicAutocomplete
-                  disabled={ [ ...heroDataValues[`${item}`] ].length === 0 }
+                  disabled={ [ ...heroFilterValues[`${item}`] ].length === 0 }
                   id={`basic-autocomplete-${item}`}
                   label={LABELS[item]}
                   onChange={(event, value, reason, details) =>
                     handleChange(event, value, reason, `${item}`,  details)
                   }
                   options={
-                    Array.isArray(heroDataValues[`${item}`])
-                      ? [ ...heroDataValues[`${item}`] ].map(name => [name])
-                      : Array.from(heroDataValues[`${item}`]).map(name => [name])
+                    Array.isArray(heroFilterValues[`${item}`])
+                      ? [ ...heroFilterValues[`${item}`] ].map(name => [name])
+                      : Array.from(heroFilterValues[`${item}`]).map(name => [name])
                   }
                   size='small'
                   value={[ ...autocompleteFilters[`${item}`] ] as any} // Todo: fix any

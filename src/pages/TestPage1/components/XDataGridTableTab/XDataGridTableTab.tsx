@@ -5,7 +5,7 @@ import { GridLogicOperator } from '@mui/x-data-grid';
 import { MarvelHeroModal } from 'src/components/Modals';
 import { XDataGridTable } from 'src/components/Organisms';
 import { useTestPage1Context } from 'src/context';
-import type { IMarvelHeroesData } from 'src/interfaces';
+import type { IMarvelHeroTableData } from 'src/interfaces';
 
 import { columnsDefault as initColumnsDefault } from './utils/helper';
 
@@ -24,7 +24,7 @@ export const XDataGridTableTab = () => {
 
   const columnsDefault = useMemo(() => initColumnsDefault, []);
 
-  const handleRowClick = (params: { row: IMarvelHeroesData }) => {
+  const handleRowClick = (params: { row: IMarvelHeroTableData }) => {
     setSelectedData(() => ({
       ...params.row 
     }));
@@ -33,7 +33,7 @@ export const XDataGridTableTab = () => {
 
   return (
     <>
-      <XDataGridTable<IMarvelHeroesData>
+      <XDataGridTable<IMarvelHeroTableData>
         columns={ columnsDefault }
         filterModel={ {
           // items: [ ...dataFiltered ],

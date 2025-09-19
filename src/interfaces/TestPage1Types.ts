@@ -1,19 +1,23 @@
 import type { TableCellProps } from '@mui/material/TableCell';
 import type { Gender } from './CommonTypes';
 
-export type HeroDataValues = {
+export type MarvelHeroFilterValues = {
   [K in keyof IMarvelHeroesData]: Set<string> | string[] | [];
 };
 
 export interface IMarvelHeroesData {
-  nameLabel: string | null,
-  citizenshipLabel: string | null,
-  creatorLabel: string | null,
-  genderLabel: Gender | null,
-  id: string | null,
-  memberOfLabel: string | null,
-  occupationLabel: string | null,
-  skillsLabel: string | null,
+  nameLabel: string | null;
+  citizenshipLabel: string | null;
+  creatorLabel: string | null;
+  genderLabel: Gender | null;
+  memberOfLabel: string | null;
+  occupationLabel: string | null;
+  skillsLabel: string | null;
+}
+
+export interface IMarvelHeroTableData extends IMarvelHeroesData {
+  actions: React.ReactNode | null;
+  id: string | null;
 }
 
 export interface ISubTask {

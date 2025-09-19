@@ -1,6 +1,6 @@
-import type { HeroDataValues } from 'src/interfaces';
+import type { MarvelHeroFilterValues } from 'src/interfaces';
 
-export const initFiltersData: Omit<HeroDataValues, 'id'> = {
+export const initFiltersData: MarvelHeroFilterValues = {
   nameLabel: [],
   citizenshipLabel: [],
   creatorLabel: [],

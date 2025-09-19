@@ -1,13 +1,13 @@
-import { useCallback, useMemo, useState } from 'react';
 import { Stack } from '@mui/material';
+import { useCallback, useMemo, useState } from 'react';
 
 import { useTestPage1Context } from 'src/context';
-import type { IMarvelHeroesData } from 'src/interfaces';
+import type { IMarvelHeroTableData } from 'src/interfaces';
 import { headerCells } from './utils/helper';
 
-import { MuiTable } from 'src/components/Organisms/MuiTable';
 import { MarvelHeroesFiltersModal, MarvelHeroModal } from 'src/components/Modals';
-import { MarvelHeroesFilters, MarvelHeroNew } from './components';
+import { MuiTable } from 'src/components/Organisms/MuiTable';
+import { AddNewHeroButton, FiltersButton } from './components';
 
 export const MuiTableTab = () => {
   const {
@@ -45,7 +45,7 @@ export const MuiTableTab = () => {
     setIsNewHero(false);
   };
 
-  const handleRowClick = useCallback((data: IMarvelHeroesData) => {
+  const handleRowClick = useCallback((data: IMarvelHeroTableData) => {
     setSelectedData(prevData => ({
       ...prevData,
       ...data 
@@ -56,10 +56,10 @@ export const MuiTableTab = () => {
 
   return (
     <>
-      <MuiTable<IMarvelHeroesData>
+      <MuiTable<IMarvelHeroTableData>
         headerCells={_headerCells}
         onFilterClick={setOpenFiltersModal}
-        onFilterDelete={handleDeleteFilter as (filter: keyof IMarvelHeroesData, value: string) => void}
+        onFilterDelete={handleDeleteFilter as (filter: keyof IMarvelHeroTableData, value: string) => void}
         onRowClick={ handleRowClick }
         rowsData={hasFilters ? filteredData : data}
         toolbarChildren={
@@ -67,11 +67,11 @@ export const MuiTableTab = () => {
             direction='row'
             spacing={1}
           >
-            <MarvelHeroNew
+            <AddNewHeroButton
               disabled={/*isLoading ||*/ false}
               onClick={handleAddMarvelHero}
             />
-            <MarvelHeroesFilters
+            <FiltersButton
               disabled={/*isLoading ||*/ !data || data?.length === 0}
               openModal={setOpenFiltersModal}
             />

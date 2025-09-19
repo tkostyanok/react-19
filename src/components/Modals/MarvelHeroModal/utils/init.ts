@@ -1,6 +1,7 @@
-import type { IMarvelHeroesData } from 'src/interfaces';
+import type { IMarvelHeroTableData } from 'src/interfaces';
 
-export const initialMarvelHero: IMarvelHeroesData = {
+export const initialMarvelHero: IMarvelHeroTableData = {
+  actions: null,
   citizenshipLabel: null,
   creatorLabel: null,
   id: null,
