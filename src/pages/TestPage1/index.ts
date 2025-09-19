@@ -1,3 +1,1 @@
-export {
-  TestPage1 as default 
-} from './TestPage1';
+export { TestPage1 as default } from './TestPage1';

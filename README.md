@@ -52,3 +52,5 @@ export default tseslint.config({
   },
 })
 ```
+
+[styles] -> The main folder where all theme-related files and utilities for project.

@@ -5,7 +5,7 @@ import { GridLogicOperator } from '@mui/x-data-grid';
 import { MarvelHeroModal } from 'src/components/Modals';
 import { XDataGridTable } from 'src/components/Organisms';
 import { useTestPage1Context } from 'src/context';
-import type { IMarvelHeroesData } from 'src/interfaces';
+import type { IMarvelHeroTableData } from 'src/interfaces';
 
 import { columnsDefault as initColumnsDefault } from './utils/helper';
 
@@ -14,21 +14,17 @@ import { columnsDefault as initColumnsDefault } from './utils/helper';
  */
 export const XDataGridTableTab = () => {
   const {
-    initData,
+    data,
+    handleSaveData,
     isModalOpen,
     selectedData,
     setIsModalOpen,
     setSelectedData,
   } = useTestPage1Context();
 
-  console.log('initData', initData);
-  console.log('isModalOpen', isModalOpen);
-
   const columnsDefault = useMemo(() => initColumnsDefault, []);
 
-  const handleRowClick= (params: { row: IMarvelHeroesData }) => {
-    console.log(`row1 "${params.row.nameLabel}" clicked`);
-    console.log('row data', params.row);
+  const handleRowClick = (params: { row: IMarvelHeroTableData }) => {
     setSelectedData(() => ({
       ...params.row 
     }));
@@ -37,7 +33,7 @@ export const XDataGridTableTab = () => {
 
   return (
     <>
-      <XDataGridTable<IMarvelHeroesData>
+      <XDataGridTable<IMarvelHeroTableData>
         columns={ columnsDefault }
         filterModel={ {
           // items: [ ...dataFiltered ],
@@ -50,11 +46,12 @@ export const XDataGridTableTab = () => {
         } }
         loading={ false }
         onRowClick={ handleRowClick }
-        rows={ initData }
+        rows = { data }
       />
       <MarvelHeroModal
         data={ selectedData }
-        handleCloseModal={ () => setIsModalOpen(false) }
+        onClose={ () => setIsModalOpen(false) }
+        onSave={ handleSaveData }
         open={ isModalOpen }
       />
     </>

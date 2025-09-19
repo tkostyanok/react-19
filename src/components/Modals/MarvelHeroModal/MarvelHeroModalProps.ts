@@ -1,14 +1,27 @@
-import type { IMarvelHeroesData } from '../../../interfaces';
+import type { IMarvelHeroTableData } from 'src/interfaces';
 
 export interface MarvelHeroModalProps {
-  data: IMarvelHeroesData | null;
+  /**
+   * Data of the Marvel hero to be displayed or edited in the modal. 
+   * If null, the modal is in 'create new hero' mode.
+   */
+  data: IMarvelHeroTableData | null;
+  /**
+   * Indicates if the modal is for creating a new hero.
+   */
   isNewHero?: boolean;
   /**
    * Function to close the modal.
    */
-  handleCloseModal: () => void;
+  onClose: () => void;
+  /**
+   * Function to save the hero data.
+   * @param dataToSave - Partial data of the Marvel hero to be saved.
+   * @returns Promise that resolves when the save operation is complete.
+   */
+  onSave: ( dataToSave: Partial<IMarvelHeroTableData> ) => Promise<void>;
   /**
    * Indicates if the modal is open.
    */
-  open?: boolean;
+  open: boolean;
 }

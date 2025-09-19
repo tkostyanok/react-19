@@ -2,7 +2,6 @@ import {
   DataGrid,
   type DataGridProps 
 } from '@mui/x-data-grid';
-
 import { GREY_100 } from 'src/constants/colors';
 
 /**

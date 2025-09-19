@@ -1,39 +1,81 @@
-// import type { SyntheticEvent } from 'react';
+import { useEffect, useState, type ChangeEvent, type SyntheticEvent } from 'react';
 
 import {
-  useMediaQuery, useTheme 
+  useMediaQuery, useTheme
 } from '@mui/material';
-import Button from '@mui/material/Button';
 import Dialog from '@mui/material/Dialog';
-import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
 
-import { MarvelHeroInfo } from 'src/components/Molecules';
+import type { IMarvelHeroTableData } from 'src/interfaces';
+import { getModificationsFromSimpleObjects, isEmptyObject } from 'src/utils';
+import { initialMarvelHero } from './utils';
 
-import { DialogHeader } from '../components/DialogHeader';
+import { ModalFooter, ModalHeader } from '../components';
+import { MarvelHeroInfo } from './components';
 
 import type { MarvelHeroModalProps } from './MarvelHeroModalProps';
 
 export const MarvelHeroModal = ({
   data,
   isNewHero = false,
-  handleCloseModal,
+  onClose,
+  onSave,
   open = false,
-
 }: MarvelHeroModalProps) => {
   const theme = useTheme();
   const fullScreen = useMediaQuery(theme.breakpoints.down('sm'));
+  // TODO: Optimize with add translation
   const title = isNewHero ? 'Add New Hero' : 'Marvel Hero Details';
-  console.log('modal data', data);
 
-  // const handleChange = (event: SyntheticEvent) => {
-  //   const target = event.target as HTMLInputElement;
-  //   console.log(`Change event on ${target.name}: ${target.value}`);
-  // };
+  const [ heroFilterValues, setHeroFilterValues ] = useState<IMarvelHeroTableData>(initialMarvelHero);
+  const [ isDataChanged, setIsDataChanged ] = useState(false);
+
+  useEffect(() => {
+    if (isNewHero) {
+      setHeroFilterValues(initialMarvelHero);
+    } else if (!isEmptyObject(data)) {
+      setHeroFilterValues((prevValues: IMarvelHeroTableData) => ({
+        ...prevValues,
+        ...data
+      }));
+    }
+  }, [ data, isNewHero ]);
+
+  const handleChange = (
+    event: SyntheticEvent 
+      | ChangeEvent<HTMLInputElement> 
+      | (Event & { target: { value: unknown; name: string; }; })
+  ) => {
+    const target = event.target as HTMLInputElement;
+
+    setHeroFilterValues((prevValues: IMarvelHeroTableData) => ({
+      ...prevValues,
+      [target.name]: target.value
+    }));
+    setIsDataChanged(true);
+  };
 
   const handleSubmit = async () => {
-    /** TODO: submit data */
-    handleCloseModal();
+    const modifiedValues = isNewHero
+      ? { ...heroFilterValues }
+      : getModificationsFromSimpleObjects(
+          data || {}, 
+          heroFilterValues
+        );
+
+    // If no changes detected, do not proceed
+    if (isEmptyObject(modifiedValues)) {
+      onClose();
+      return;
+    }
+    // TODO: Add error handling
+    // TODO: new hero , validate required fields
+    // TODO: move id generation for new hero to context
+    await onSave({
+      ...modifiedValues,
+      id: data?.id || null
+    });
+    onClose();
   };
 
   return (
@@ -42,39 +84,23 @@ export const MarvelHeroModal = ({
       fullWidth
       maxWidth='sm'
       open={ open }
-      onClose={ handleCloseModal }
+      onClose={ onClose }
     >
-      <DialogHeader
-        handleClose={ handleCloseModal }
+      <ModalHeader
+        onClose={ onClose }
         title={ title }
       />
-      <DialogContent
-        // sx={{
-        //   pt: `8px !important`,
-        // }}
-      >
-        <MarvelHeroInfo data={ data } />
+      <DialogContent dividers>
+        <MarvelHeroInfo
+          data={ heroFilterValues }
+          onChange={ handleChange }
+        />
       </DialogContent>
-      <DialogActions>
-        <Button
-          color='secondary'
-          disabled={ false }
-          onClick={ handleSubmit }
-          type='submit'
-          variant='contained'
-          size='small'
-        >
-          Save
-        </Button>
-        <Button
-          color='error'
-          onClick={ handleCloseModal }
-          variant='text'
-          size='small'
-        >
-          Cancel
-        </Button>
-      </DialogActions>
+      <ModalFooter
+        isDisabled={ !isDataChanged }
+        onClose={ onClose }
+        onSubmit={ handleSubmit }
+      />
     </Dialog>
   );
 };

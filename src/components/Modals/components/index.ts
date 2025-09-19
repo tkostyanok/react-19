@@ -1,1 +1,2 @@
-export * from './DialogHeader';
+export * from './ModalFooter';
+export * from './ModalHeader';

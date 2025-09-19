@@ -25,7 +25,6 @@ export const ListItem = ({ taskData }: ListItemProps) => {
   return (
     <>
       <ListItemButton
-        // sx={{ paddingLeft: '1rem', paddingRight: '1rem', marginTop: '0.2rem' }}
         onClick={ handleClick }
       >
         <ListItemIcon

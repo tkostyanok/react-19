@@ -7,11 +7,16 @@ import Skeleton from '@mui/material/Skeleton';
 export const BasicInputLoading = () => {
   return (
     <Box
-      display='flex'
-      gap={ 2 }
-      mb={ 1 }
+      display='grid'
+      mt={ 0.5 }
       width='100%'
     >
+      <Skeleton
+        height={ 14 }
+        sx={{ marginBottom: '4px' }}
+        variant='rounded'
+        width='25%'
+      />
       <Skeleton
         variant='rounded'
         height={ 40 }

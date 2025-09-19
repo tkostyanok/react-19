@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import type { SyntheticEvent } from 'react';
 
 import { 
   TabPanel,
@@ -24,23 +25,23 @@ import {
  */
 // TODO: implement translation
 export const TestPage1 = () => {
-  const TABS = [ 'X-DataGrid', 'Mui-Table', 'Custom Table' ];
+  const TABS = [ 'Mui-Table', 'X-DataGrid Table', 'Custom Table' ];
   const TABS_COMPONENTS = [
-    <XDataGridTableTab key='X-DataGrid' />,
     <MuiTableTab  key='Mui-Table' />,
+    <XDataGridTableTab key='X-DataGrid' />,
     <CustomTableTab key='Custom-Table' />,
   ];
 
   const [ currentTabIndex, setCurrentTabIndex ] = useState(0);
   
-  const handleChangeTab = (event: React.SyntheticEvent, newTabIndex: number) => {
+  const handleChangeTab = (_event: SyntheticEvent, newTabIndex: number) => {
     console.log('handleChangeTab', newTabIndex);
     setCurrentTabIndex(newTabIndex);
   };
 
   return (
     <TestPage1Provider
-      data = { mockData }
+      initData = { mockData }
     >
       <TestPage1Layout>
         <TextPageGoal />
