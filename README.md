@@ -1,56 +1,21 @@
-# React + TypeScript + Vite
+## Testing project
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+ - React  (v 19)
+ - TypeScript 
+ - Vite
+ - Material UI (v. 7.1.2)
+ - Joy UI
 
-Currently, two official plugins are available:
+### Test page 1
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
-
-## Expanding the ESLint configuration
-
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
-
-```js
-export default tseslint.config({
-  extends: [
-    // Remove ...tseslint.configs.recommended and replace with this
-    ...tseslint.configs.recommendedTypeChecked,
-    // Alternatively, use this for stricter rules
-    ...tseslint.configs.strictTypeChecked,
-    // Optionally, add this for stylistic rules
-    ...tseslint.configs.stylisticTypeChecked,
-  ],
-  languageOptions: {
-    // other options...
-    parserOptions: {
-      project: ['./tsconfig.node.json', './tsconfig.app.json'],
-      tsconfigRootDir: import.meta.dirname,
-    },
-  },
-})
-```
-
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
-
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
-
-export default tseslint.config({
-  plugins: {
-    // Add the react-x and react-dom plugins
-    'react-x': reactX,
-    'react-dom': reactDom,
-  },
-  rules: {
-    // other rules...
-    // Enable its recommended typescript rules
-    ...reactX.configs['recommended-typescript'].rules,
-    ...reactDom.configs.recommended.rules,
-  },
-})
-```
-
-[styles] -> The main folder where all theme-related files and utilities for project.
+ - Test Mui Tables:
+    - [Table from MUI](https://mui.com/material-ui/react-table/)
+    - [Table from Joy UI](https://mui.com/joy-ui/react-table/)
+    - Custom MUI Table based on MUI components
+  
+  1. Read data from file -> Get data from Server
+  2. Show data in table
+  3. Allow add/delete/modify data
+  4. Allow filter data
+  ...
+  Additional ideas will be add on Test page 1 :)

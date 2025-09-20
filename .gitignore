@@ -24,5 +24,4 @@ dist-ssr
 *.sw?
 
 # Files
-Installation.md
 src/pages/*/task/*
