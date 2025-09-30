@@ -7,8 +7,11 @@ import Dialog from '@mui/material/Dialog';
 import DialogContent from '@mui/material/DialogContent';
 import Typography from '@mui/material/Typography';
 
+import {
+  ModalFooter, ModalHeader 
+} from '../components';
+
 import type { ConfirmationModalProps } from './ConfirmationModalProps';
-import { ModalFooter, ModalHeader } from '../components';
 
 export const ConfirmationModal = ({
   message,

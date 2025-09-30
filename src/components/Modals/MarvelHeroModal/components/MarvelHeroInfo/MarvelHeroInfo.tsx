@@ -1,8 +1,10 @@
 import Grid from '@mui/material/Grid';
 
+import {
+  BasicInput, BasicSelect 
+} from 'src/components/Atoms';
 import type { IMarvelHeroesData } from 'src/interfaces';
 
-import { BasicInput, BasicSelect } from 'src/components/Atoms';
 import type { MarvelHeroInfoProps } from './MarvelHeroInfoProps';
 
 export const MarvelHeroInfo = ({
@@ -11,7 +13,7 @@ export const MarvelHeroInfo = ({
   onChange
 }: MarvelHeroInfoProps) => {
   // TODO: Optimize with add translation
-  const LABELS: {[key in keyof IMarvelHeroesData]: string} = {
+  const LABELS: {[key in keyof IMarvelHeroesData]: string } = {
     nameLabel: 'Name',
     genderLabel: 'Gender',
     citizenshipLabel: 'Citizenship',
@@ -22,8 +24,14 @@ export const MarvelHeroInfo = ({
   } as const;
 
   const GENDER_OPTIONS = [
-    { title: 'female', value: 'female'},
-    { title: 'male', value: 'male'},
+    {
+      title: 'female',
+      value: 'female'
+    },
+    {
+      title: 'male',
+      value: 'male'
+    },
   ];
 
   return (
@@ -69,7 +77,7 @@ export const MarvelHeroInfo = ({
         />
       </Grid>
       {
-        (['skillsLabel', 'occupationLabel', 'memberOfLabel', 'creatorLabel'] as const).map((field) => (
+        ([ 'skillsLabel', 'occupationLabel', 'memberOfLabel', 'creatorLabel' ] as const).map((field) => (
           <Grid
             size={ 12 }
             key={field}

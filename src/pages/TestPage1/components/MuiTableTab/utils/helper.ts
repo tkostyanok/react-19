@@ -39,7 +39,8 @@ export const headerCells: MuiTableHeaderCell<IMarvelHeroTableData>[] = [
     headerName: 'Creator',
     width: 140,
   },
-  { field: 'actions',
+  {
+    field: 'actions',
     headerName: 'Actions',
     width: 50,
   }

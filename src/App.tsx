@@ -1,4 +1,5 @@
 import { ThemeProvider as MaterialTM } from '@mui/material/styles';
+
 import loadable from '@loadable/component';
 
 import muiTheme from './styles/mui-theme';

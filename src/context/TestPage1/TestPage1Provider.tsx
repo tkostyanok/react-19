@@ -4,13 +4,15 @@ import {
   useEffect,
   useState
 } from 'react';
+
+import type {
+  Gender, IMarvelHeroesData, IMarvelHeroTableData, MarvelHeroFilterValues 
+} from 'src/interfaces';
 import { v4 } from 'uuid';
 
-import type { Gender, IMarvelHeroesData, IMarvelHeroTableData, MarvelHeroFilterValues } from 'src/interfaces';
-import { initFiltersData } from './utils';
-
-import { TestPage1Context } from './TestPage1Context';
 import { DeleteHeroButton } from './components';
+import { TestPage1Context } from './TestPage1Context';
+import { initFiltersData } from './utils';
 
 interface ITestPage1ProviderProps {
   children?: ReactNode;
@@ -44,9 +46,9 @@ export const TestPage1Provider = ({
 
     const tableData = _data
       .map((item: IMarvelHeroTableData) => {
-      return {
-        ...item,
-        actions: 
+        return {
+          ...item,
+          actions: 
           <>
             <DeleteHeroButton
               dataToDelete={item}
@@ -54,8 +56,8 @@ export const TestPage1Provider = ({
 
             />
           </>,
-      };
-    });
+        };
+      });
 
     setData(tableData);
   }, [ initData ]);
@@ -114,19 +116,19 @@ export const TestPage1Provider = ({
       : null;
     const updatedData  = await newHeroTableData !== null
       ? [
-          newHeroTableData as IMarvelHeroTableData,
-          ...data
-        ]
+        newHeroTableData as IMarvelHeroTableData,
+        ...data
+      ]
 
       : data.map(item => {
-          if (item.id === dataToSave.id) {
-            return {
-              ...item,
-              ...dataToSave
-            };
-          }
-          return item;
-        });
+        if (item.id === dataToSave.id) {
+          return {
+            ...item,
+            ...dataToSave
+          };
+        }
+        return item;
+      });
     setData(updatedData);
   }, [ data, handleDeleteData ]);
 

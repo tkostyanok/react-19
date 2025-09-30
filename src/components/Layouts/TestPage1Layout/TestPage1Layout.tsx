@@ -9,15 +9,15 @@ export const TestPage1Layout = ({ children }: TestPage1LayoutProps) => {
     <Suspense 
       fallback={
         <Box 
-          sx={{ 
-            backgroundColor: 'transparent'
+          sx={{
+            backgroundColor: 'transparent' 
           }}
         />
       }
     >
       <Box 
         sx={{
-          display: 'flex',
+          display: 'flex', 
         }}
       >
         <Box

@@ -1,10 +1,11 @@
 import { useState } from 'react';
 
-import DeleteIcon from '@mui/icons-material/Delete';
 import IconButton, { type IconButtonProps } from '@mui/material/IconButton';
 import Tooltip from '@mui/material/Tooltip';
+import DeleteIcon from '@mui/icons-material/Delete';
 
 import { ConfirmationModal } from 'src/components/Modals';
+
 import type { DeleteHeroButtonProps } from './DeleteHeroButtonProps';
 
 export const DeleteHeroButton = ({
@@ -21,7 +22,7 @@ export const DeleteHeroButton = ({
   const handleDelete = () => {
     onDelete(dataToDelete);
     handleOpenConfirmationModal();
-  }
+  };
   
   return (
     <>

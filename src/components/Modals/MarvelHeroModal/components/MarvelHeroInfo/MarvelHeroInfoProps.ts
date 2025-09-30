@@ -1,4 +1,7 @@
-import type { ChangeEvent, SyntheticEvent } from 'react';
+import type {
+  ChangeEvent, SyntheticEvent 
+} from 'react';
+
 import type { IMarvelHeroesData } from 'src/interfaces';
 
 export interface MarvelHeroInfoProps {
@@ -19,6 +22,7 @@ export interface MarvelHeroInfoProps {
     event: 
       | SyntheticEvent 
       | ChangeEvent<HTMLInputElement> 
-      | (Event & { target: { value: unknown; name: string; }; })
-    ) => void;
+      | (Event & { target: { value: unknown;
+        name: string; }; })
+  ) => void;
 }

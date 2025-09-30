@@ -1,10 +1,10 @@
 
-import Autocomplete from '@mui/material/Autocomplete';
+import Autocomplete, { type AutocompleteProps } from '@mui/material/Autocomplete';
 import Box from '@mui/material/Box';
-import TextField from '@mui/material/TextField';
-import type { AutocompleteProps } from '@mui/material';
+import TextField from '@mui/material/TextField'; 
 
 import { BasicLabel } from '../BasicLabel';
+
 import type { BasicAutocompleteProps } from './BasicAutocompleteProps';
 
 export const BasicAutocomplete = ({

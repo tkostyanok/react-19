@@ -1,5 +1,9 @@
-import type { MouseEvent, SyntheticEvent } from 'react';
-import { useMemo, useState } from 'react';
+import type {
+  MouseEvent, SyntheticEvent 
+} from 'react';
+import {
+  useMemo, useState 
+} from 'react';
 
 import Box from '@mui/material/Box';
 import Paper from '@mui/material/Paper';
@@ -10,15 +14,17 @@ import TableContainer from '@mui/material/TableContainer';
 import TablePagination from '@mui/material/TablePagination';
 import TableRow from '@mui/material/TableRow';
 
-import { GREY_200, GREY_50, GREY_600 } from 'src/constants/colors';
+import {
+  GREY_50, GREY_200, GREY_600 
+} from 'src/constants/colors';
 import type { Order } from 'src/interfaces';
-import { getComparator } from './utils';
 
 import {
   MuiTableHeader,
   MuiTableToolbar
 } from './components';
 import type { MuiTableProps } from './MuiTableProps';
+import { getComparator } from './utils';
 
 /**
  * MuiTable displays a `MUI Table` component.
@@ -72,7 +78,11 @@ export const MuiTable = <T extends object>({
   );
 
   return (
-    <Box sx={{ width: '100%' }}>
+    <Box
+      sx={{
+        width: '100%' 
+      }}
+    >
       <Paper 
         sx={{ 
           borderBottom: `1px solid ${GREY_600} !important`,
@@ -116,10 +126,10 @@ export const MuiTable = <T extends object>({
                     sx={{ 
                       cursor: 'pointer',
                       '&:nth-of-type(even)': {
-                        backgroundColor: GREY_50
+                        backgroundColor: GREY_50 
                       },
                       '&.MuiTableRow-root:hover': {
-                        backgroundColor: GREY_200
+                        backgroundColor: GREY_200 
                       }
                     }}
                     tabIndex={-1}
@@ -157,7 +167,11 @@ export const MuiTable = <T extends object>({
               })}
               {emptyRows > 0
                 ? (
-                  <TableRow style={{ height: 53 * emptyRows }}>
+                  <TableRow
+                    style={{
+                      height: 53 * emptyRows 
+                    }}
+                  >
                     <TableCell colSpan={6} />
                   </TableRow>
                 )
@@ -173,7 +187,7 @@ export const MuiTable = <T extends object>({
           onRowsPerPageChange={handleChangeRowsPerPage}
           page={page}
           rowsPerPage={rowsPerPage}
-          rowsPerPageOptions={[10, 20, 25]}
+          rowsPerPageOptions={[ 10, 20, 25 ]}
         />
       </Paper>
     </Box>

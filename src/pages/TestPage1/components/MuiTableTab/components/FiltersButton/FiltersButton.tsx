@@ -1,6 +1,6 @@
-import FilterListIcon from '@mui/icons-material/FilterList';
 import IconButton, { type IconButtonProps } from '@mui/material/IconButton';
 import Tooltip from '@mui/material/Tooltip';
+import FilterListIcon from '@mui/icons-material/FilterList';
 
 import type { FiltersButtonProps } from './FiltersButtonProps';
 

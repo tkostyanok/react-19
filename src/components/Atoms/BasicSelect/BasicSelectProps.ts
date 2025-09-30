@@ -1,4 +1,5 @@
-import type { SelectProps } from '@mui/material';
+import { type SelectProps } from '@mui/material/Select';
+
 import type { ISelectOption } from 'src/interfaces';
 
 export interface BasicSelectProps<T extends object> extends Omit<SelectProps, 'label' | 'name'> {

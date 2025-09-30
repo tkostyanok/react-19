@@ -1,5 +1,5 @@
-import { useState } from 'react';
 import type { SyntheticEvent } from 'react';
+import { useState } from 'react';
 
 import { 
   TabPanel,

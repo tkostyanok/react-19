@@ -1,20 +1,26 @@
-import { useEffect, useState, type SyntheticEvent } from 'react';
-
-import Grid from '@mui/material/Grid';
 import {
-  useMediaQuery, useTheme,
+  type SyntheticEvent,useEffect, useState 
+} from 'react';
+
+import {
   type AutocompleteChangeDetails,
-  type AutocompleteChangeReason
+  type AutocompleteChangeReason,
+  useMediaQuery, useTheme
 } from '@mui/material';
 import Dialog from '@mui/material/Dialog';
 import DialogContent from '@mui/material/DialogContent';
-
-import { useTestPage1Context } from 'src/context';
-import type { Gender, IMarvelHeroesData, MarvelHeroFilterValues } from 'src/interfaces';
-import { isEmptyObject } from 'src/utils';
+import Grid from '@mui/material/Grid';
 
 import { BasicAutocomplete } from 'src/components/Atoms';
-import { ModalFooter, ModalHeader } from '../components';
+import { useTestPage1Context } from 'src/context';
+import type {
+  Gender, IMarvelHeroesData, MarvelHeroFilterValues 
+} from 'src/interfaces';
+import { isEmptyObject } from 'src/utils';
+
+import {
+  ModalFooter, ModalHeader 
+} from '../components';
 
 import type { MarvelHeroesFiltersModalProps } from './MarvelHeroesFiltersModalProps';
 
@@ -25,7 +31,7 @@ export const MarvelHeroesFiltersModal = ({
   const theme = useTheme();
   const fullScreen = useMediaQuery(theme.breakpoints.down('sm'));
   // TODO: Optimize with add translation
-  const LABELS: {[key in keyof IMarvelHeroesData]: string} = {
+  const LABELS: {[key in keyof IMarvelHeroesData]: string } = {
     nameLabel: 'Name',
     genderLabel: 'Gender',
     citizenshipLabel: 'Citizenship',
@@ -49,7 +55,7 @@ export const MarvelHeroesFiltersModal = ({
   useEffect(() => {
     if (!isEmptyObject(data)) {
       const names = data?.map(item => item.nameLabel).filter((v): v is string => !!v).sort() ?? [];
-       const genders = data?.map(item => item.genderLabel).filter((v): v is Gender => !!v) ?? [];
+      const genders = data?.map(item => item.genderLabel).filter((v): v is Gender => !!v) ?? [];
 
       setHeroFilterValues((prevValues: MarvelHeroFilterValues) => ({
         ...prevValues,
@@ -63,7 +69,7 @@ export const MarvelHeroesFiltersModal = ({
     if(open) {
       setAutocompleteFilters(filters);
     }
-  }, [open]);
+  }, [ open ]);
 
   const handleChange = (
     _event: SyntheticEvent<Element, Event>,
@@ -107,7 +113,7 @@ export const MarvelHeroesFiltersModal = ({
           spacing={ 2 }
         >
           {
-            (['nameLabel', 'genderLabel'] as const).map((item) => (
+            ([ 'nameLabel', 'genderLabel' ] as const).map((item) => (
               <Grid
                 key={`filters-${item}`}
                 size={ 12 }
@@ -121,8 +127,8 @@ export const MarvelHeroesFiltersModal = ({
                   }
                   options={
                     Array.isArray(heroFilterValues[`${item}`])
-                      ? [ ...heroFilterValues[`${item}`] ].map(name => [name])
-                      : Array.from(heroFilterValues[`${item}`]).map(name => [name])
+                      ? [ ...heroFilterValues[`${item}`] ].map(name => [ name ])
+                      : Array.from(heroFilterValues[`${item}`]).map(name => [ name ])
                   }
                   size='small'
                   value={[ ...autocompleteFilters[`${item}`] ] as any} // Todo: fix any

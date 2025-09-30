@@ -1,9 +1,11 @@
-import { MenuItem, FormControl, Select } from '@mui/material';
-import type { SelectProps } from '@mui/material';
+import FormControl from '@mui/material/FormControl';
+import MenuItem from '@mui/material/MenuItem';
+import Select, { type SelectProps } from '@mui/material/Select';
 
 import type { ISelectOption } from 'src/interfaces';
 
 import { BasicLabel } from '../BasicLabel';
+
 import { BasicSelectLoading } from './BasicSelectLoading';
 import type { BasicSelectProps } from './BasicSelectProps';
 

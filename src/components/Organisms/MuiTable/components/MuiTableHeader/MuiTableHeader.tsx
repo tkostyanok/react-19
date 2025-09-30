@@ -1,4 +1,5 @@
 import Badge from '@mui/material/Badge';
+import Box from '@mui/material/Box';
 import Chip from '@mui/material/Chip';
 import TableCell from '@mui/material/TableCell';
 import TableHead from '@mui/material/TableHead';
@@ -6,10 +7,11 @@ import TableRow from '@mui/material/TableRow';
 import TableSortLabel from '@mui/material/TableSortLabel';
 import FilterAltIcon from '@mui/icons-material/FilterAlt';
 
-import { GREY_300, GREY_600 } from 'src/constants/colors';
+import {
+  GREY_300, GREY_600 
+} from 'src/constants/colors';
 
 import type { MuiTableHeaderProps } from './MuiTableHeaderProps';
-import Box from '@mui/material/Box';
 
 export const  MuiTableHeader = <T extends object>({
   headerCells,
@@ -67,7 +69,9 @@ export const  MuiTableHeader = <T extends object>({
                   >
                     <FilterAltIcon
                       fontSize='small'
-                      sx={{ color: GREY_600 }}
+                      sx={{
+                        color: GREY_600 
+                      }}
                     />
                   </Badge>
                 )

@@ -23,7 +23,7 @@ export const TabPanel = ({
       id={`tabpanel-${tabIndex}`}
       role='tabpanel'
       style={{
-        width: '100%',
+        width: '100%', 
       }}
     >
       {currentTabIndex === tabIndex && <> {children} </>}

@@ -1,6 +1,8 @@
 import type { MouseEvent } from 'react';
 
-import type { MuiTableHeaderCell, Order } from 'src/interfaces';
+import type {
+  MuiTableHeaderCell, Order 
+} from 'src/interfaces';
 
 export interface MuiTableHeaderProps<T extends object> {
   /**

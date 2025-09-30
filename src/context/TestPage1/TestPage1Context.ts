@@ -7,7 +7,10 @@ import {
   useContext 
 } from 'react';
 
-import type { IMarvelHeroTableData, MarvelHeroFilterValues } from 'src/interfaces';
+import type {
+  IMarvelHeroTableData, MarvelHeroFilterValues 
+} from 'src/interfaces';
+
 import { initFiltersData } from './utils';
  
 interface ITestPage1Context {

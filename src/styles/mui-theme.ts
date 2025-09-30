@@ -1,6 +1,8 @@
 import { createTheme } from '@mui/material/styles';
 
-import { BLUE_900, LIGHT_BLUE_600, WHITE } from 'src/constants/colors';
+import {
+  BLUE_900, LIGHT_BLUE_600, WHITE 
+} from 'src/constants/colors';
 
 
 const muiTheme = createTheme({
@@ -18,10 +20,10 @@ const muiTheme = createTheme({
     MuiDialogActions: {
       styleOverrides: {
         root: {
-          padding: '16px 24px',
-        },
-      },
-    },
+          padding: '16px 24px', 
+        }, 
+      }, 
+    }, 
   },
 });
 

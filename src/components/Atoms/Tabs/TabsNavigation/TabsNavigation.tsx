@@ -1,8 +1,5 @@
-import {
-  Tab,
-  Tabs, 
-  type TabsProps,
-} from '@mui/material';
+import Tab from '@mui/material/Tab';
+import Tabs,  { type TabsProps } from '@mui/material/Tabs';
 
 import {
   INDIGO_900,
@@ -29,8 +26,8 @@ export const TabsNavigation = ({
     <Tabs
       sx={{
         '& .MuiTabs-indicator': {
-          backgroundColor: TRANSPARENT,
-        },
+          backgroundColor: TRANSPARENT, 
+        }, 
       }}
       variant='fullWidth'
       {...props}
@@ -47,7 +44,7 @@ export const TabsNavigation = ({
             color: index === props?.value ? WHITE : INDIGO_900,
             textTransform: 'none',
             '&.Mui-selected': {
-              color: index === props?.value ? WHITE : INDIGO_900,
+              color: index === props?.value ? WHITE : INDIGO_900, 
             },
           }}
           id={`$tab-${index}`}

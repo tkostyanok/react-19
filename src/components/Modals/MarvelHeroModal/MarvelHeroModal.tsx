@@ -1,4 +1,6 @@
-import { useEffect, useState, type ChangeEvent, type SyntheticEvent } from 'react';
+import {
+  type ChangeEvent, type SyntheticEvent,useEffect, useState 
+} from 'react';
 
 import {
   useMediaQuery, useTheme
@@ -7,13 +9,17 @@ import Dialog from '@mui/material/Dialog';
 import DialogContent from '@mui/material/DialogContent';
 
 import type { IMarvelHeroTableData } from 'src/interfaces';
-import { getModificationsFromSimpleObjects, isEmptyObject } from 'src/utils';
-import { initialMarvelHero } from './utils';
+import {
+  getModificationsFromSimpleObjects, isEmptyObject 
+} from 'src/utils';
 
-import { ModalFooter, ModalHeader } from '../components';
+import {
+  ModalFooter, ModalHeader 
+} from '../components';
+
 import { MarvelHeroInfo } from './components';
-
 import type { MarvelHeroModalProps } from './MarvelHeroModalProps';
+import { initialMarvelHero } from './utils';
 
 export const MarvelHeroModal = ({
   data,
@@ -44,7 +50,8 @@ export const MarvelHeroModal = ({
   const handleChange = (
     event: SyntheticEvent 
       | ChangeEvent<HTMLInputElement> 
-      | (Event & { target: { value: unknown; name: string; }; })
+      | (Event & { target: { value: unknown;
+        name: string; }; })
   ) => {
     const target = event.target as HTMLInputElement;
 
@@ -57,11 +64,13 @@ export const MarvelHeroModal = ({
 
   const handleSubmit = async () => {
     const modifiedValues = isNewHero
-      ? { ...heroFilterValues }
+      ? {
+        ...heroFilterValues 
+      }
       : getModificationsFromSimpleObjects(
-          data || {}, 
-          heroFilterValues
-        );
+        data || {}, 
+        heroFilterValues
+      );
 
     // If no changes detected, do not proceed
     if (isEmptyObject(modifiedValues)) {

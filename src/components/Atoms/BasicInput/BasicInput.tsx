@@ -2,6 +2,7 @@ import Box from '@mui/material/Box';
 import TextField from '@mui/material/TextField';
 
 import { BasicLabel } from '../BasicLabel';
+
 import { BasicInputLoading } from './BasicInputLoading';
 import type { BasicInputProps } from './BasicInputProps';
 
@@ -24,9 +25,9 @@ export const BasicInput = ({
       <TextField
         fullWidth
         size='small'
-        sx={ {
+        sx={{
           ...sxProps, 
-        } }
+        }}
         type='text'
         value={ value === null ? '' : value }
         variant='outlined'

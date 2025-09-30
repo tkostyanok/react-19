@@ -13,7 +13,9 @@ export const BasicSelectLoading = () => {
     >
       <Skeleton
         height={ 14 }
-        sx={{ marginBottom: '4px' }}
+        sx={{
+          marginBottom: '4px' 
+        }}
         variant='rounded'
         width='25%'
       />

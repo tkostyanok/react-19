@@ -9,7 +9,9 @@ import { isEqual } from 'lodash';
 
 // TODO: tests!
 export const getModificationsFromSimpleObjects = <T extends Record<string, any>>(initial: T, updated: T): T => {
-  const result: T = { ...updated };
+  const result: T = {
+    ...updated 
+  };
   Object.keys(updated).forEach((key) => {
     if (isEqual(updated[key], initial[key])) {
       delete result[key];

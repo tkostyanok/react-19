@@ -40,7 +40,7 @@ export default tseslint.config(
       '@stylistic/object-curly-newline': [
         'error', 
         { 
-          'ObjectExpression': { 'multiline': true, 'minProperties': 2 },
+          'ObjectExpression': { 'multiline': true, 'minProperties': 1 },
           'ObjectPattern': { 'multiline': true, 'minProperties': 2 },
           'ImportDeclaration': { 'multiline': true, 'minProperties': 2 },
           'ExportDeclaration': { 'multiline': true, 'minProperties': 2 },

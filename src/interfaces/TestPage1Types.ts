@@ -1,4 +1,5 @@
 import type { TableCellProps } from '@mui/material/TableCell';
+
 import type { Gender } from './CommonTypes';
 
 export type MarvelHeroFilterValues = {

@@ -1,13 +1,20 @@
-import { Stack } from '@mui/material';
-import { useCallback, useMemo, useState } from 'react';
+import {
+  useCallback, useMemo, useState 
+} from 'react';
 
+import Stack from '@mui/material/Stack';
+
+import {
+  MarvelHeroesFiltersModal, MarvelHeroModal 
+} from 'src/components/Modals';
+import { MuiTable } from 'src/components/Organisms/MuiTable';
 import { useTestPage1Context } from 'src/context';
 import type { IMarvelHeroTableData } from 'src/interfaces';
-import { headerCells } from './utils/helper';
 
-import { MarvelHeroesFiltersModal, MarvelHeroModal } from 'src/components/Modals';
-import { MuiTable } from 'src/components/Organisms/MuiTable';
-import { AddNewHeroButton, FiltersButton } from './components';
+import { headerCells } from './utils/helper';
+import {
+  AddNewHeroButton, FiltersButton 
+} from './components';
 
 export const MuiTableTab = () => {
   const {
@@ -31,7 +38,7 @@ export const MuiTableTab = () => {
       ...cell,
       filters: filters[cell.field as keyof typeof filters]
     }));
-  }, [ filters, hasFilters ]);
+  }, [ filters ]);
 
   const handleAddMarvelHero = () => {
     setSelectedData(null);
