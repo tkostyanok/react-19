@@ -1,6 +1,6 @@
 import { defineConfig } from 'eslint/config';
-import eslintConfigPrettier from 'eslint-config-prettier';
-import eslintPluginPrettier from 'eslint-plugin-prettier/recommended';
+// import eslintConfigPrettier from 'eslint-config-prettier';
+// import eslintPluginPrettier from 'eslint-plugin-prettier/recommended';
 import globals from 'globals';
 import js from '@eslint/js';
 import reactHooks from 'eslint-plugin-react-hooks';
@@ -15,8 +15,8 @@ export default defineConfig([
     extends: [
       js.configs.recommended, 
       ...tseslint.configs.recommended,
-      eslintConfigPrettier,
-      eslintPluginPrettier,
+      // eslintConfigPrettier,
+      // eslintPluginPrettier,
     ],
     files: ['**/*.{ts,tsx}'],
     languageOptions: {

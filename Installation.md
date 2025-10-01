@@ -208,3 +208,6 @@ Add command to `package.json` scripts:
   "format": "prettier --write .",
 },
 ```
+
+**Note:** I do not like how Prettier format arrays and objects without free space in the 
+beginning/end -> so for now I disabled it.
