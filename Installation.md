@@ -135,7 +135,14 @@ npm install --save-dev eslint @eslint/js @stylistic/eslint-plugin eslint-plugin-
 
 Create a `.eslint.config.js` file in the root of project and add config.
 
-My example: see file in root folder.
+Add command to `package.json` scripts:
+```
+"scripts": {
+  ...
+  "lint": "eslint .",
+},
+```
+
 .
 
 **`eslint-plugin-simple-import-sort` sort rules**
@@ -211,3 +218,39 @@ Add command to `package.json` scripts:
 
 **Note:** I do not like how Prettier format arrays and objects without free space in the 
 beginning/end -> so for now I disabled it.
+
+### 7. Add `husky`
+
+For better workflow, it is better to lint and format staged files before committing. Install `husky` and `lint-staged`
+
+```
+npm install -D husky lint-staged
+npx husky init
+```
+
+Update  `.husky/pre-commit` file:
+
+```
+npx lint-staged
+```
+
+Update `package.json` file:
+Examples:
+```
+  "lint-staged": {
+    "*.+(js|jsx|json|css|scss|ts|tsx)": [
+      "prettier --cache --write"
+    ],
+    "*.{js,jsx,ts,tsx}": "eslint --fix"
+  }
+```
+```
+"lint-staged": {
+  "*.{js,jsx,ts,tsx}": [
+    "eslint --fix",
+    "prettier --write"
+  ]
+}
+```
+
+Lint stages [docs](https://github.com/lint-staged/lint-staged)
