@@ -1,12 +1,12 @@
-import type { IMarvelHeroTableData } from 'src/interfaces';
+import type { IMarvelHeroesDataTable } from 'src/interfaces';
 
 export interface DeleteHeroButtonProps {
   /**
    * Data to be deleted.
    */
-  dataToDelete: IMarvelHeroTableData;
+  dataToDelete: IMarvelHeroesDataTable;
   /**
    * Callback fire when Delete button clicked.
    */
-  onDelete: (dataToDelete: IMarvelHeroTableData) => void;
+  onDelete: (dataToDelete: IMarvelHeroesDataTable) => void;
 }

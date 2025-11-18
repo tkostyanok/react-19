@@ -3,20 +3,20 @@ import type { TableCellProps } from '@mui/material/TableCell';
 import type { Gender } from './CommonTypes';
 
 export type MarvelHeroFilterValues = {
-  [K in keyof IMarvelHeroesData]: Set<string> | string[] | [];
+  [K in keyof IMarvelHeroesData]: string[];
 };
 
 export interface IMarvelHeroesData {
-  nameLabel: string | null;
-  citizenshipLabel: string | null;
-  creatorLabel: string | null;
-  genderLabel: Gender | null;
-  memberOfLabel: string | null;
-  occupationLabel: string | null;
-  skillsLabel: string | null;
+  name: string | null;
+  citizenship: string | null;
+  creator: string | null;
+  gender: Gender | null;
+  memberOf: string | null;
+  occupation: string | null;
+  skills: string | null;
 }
 
-export interface IMarvelHeroTableData extends IMarvelHeroesData {
+export interface IMarvelHeroesDataTable extends IMarvelHeroesData {
   actions: React.ReactNode | null;
   id: string | null;
 }

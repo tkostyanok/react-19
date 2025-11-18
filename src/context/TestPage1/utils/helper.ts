@@ -1,11 +1,25 @@
-import type { MarvelHeroFilterValues } from 'src/interfaces';
+import type {
+  IMarvelHeroesDataTable, MarvelHeroFilterValues 
+} from 'src/interfaces';
 
-export const initFiltersData: MarvelHeroFilterValues = {
-  nameLabel: [],
-  citizenshipLabel: [],
-  creatorLabel: [],
-  genderLabel: [],
-  memberOfLabel: [],
-  occupationLabel: [],
-  skillsLabel: [],
+export const initialFiltersData: MarvelHeroFilterValues = {
+  name: [],
+  citizenship: [],
+  creator: [],
+  gender: [],
+  memberOf: [],
+  occupation: [],
+  skills: [],
+};
+
+export const initialMarvelHero: IMarvelHeroesDataTable = {
+  actions: null,
+  citizenship: null,
+  creator: null,
+  id: null,
+  gender: null,
+  memberOf: null,
+  name: null,
+  occupation: null,
+  skills: null,
 };

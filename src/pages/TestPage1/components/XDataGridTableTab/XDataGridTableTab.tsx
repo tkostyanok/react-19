@@ -5,7 +5,7 @@ import { GridLogicOperator } from '@mui/x-data-grid';
 import { MarvelHeroModal } from 'src/components/Modals';
 import { XDataGridTable } from 'src/components/Organisms';
 import { useTestPage1Context } from 'src/context';
-import type { IMarvelHeroTableData } from 'src/interfaces';
+import type { IMarvelHeroesDataTable } from 'src/interfaces';
 
 import { columnsDefault as initColumnsDefault } from './utils/helper';
 
@@ -14,28 +14,24 @@ import { columnsDefault as initColumnsDefault } from './utils/helper';
  */
 export const XDataGridTableTab = () => {
   const {
-    data,
-    handleSaveData,
-    isModalOpen,
-    selectedData,
-    setIsModalOpen,
-    setSelectedData,
-  } = useTestPage1Context();
+    data, handleSaveDataLocal, initialMarvelHero, isModalOpen, selectedData, setIsModalOpen, setSelectedData 
+  } =
+    useTestPage1Context();
 
   const columnsDefault = useMemo(() => initColumnsDefault, []);
 
-  const handleRowClick = (params: { row: IMarvelHeroTableData }) => {
+  const handleRowClick = (params: { row: IMarvelHeroesDataTable }) => {
     setSelectedData(() => ({
-      ...params.row 
+      ...params.row,
     }));
-    setIsModalOpen(isModalOpen => !isModalOpen);
+    setIsModalOpen((isModalOpen) => !isModalOpen);
   };
 
   return (
     <>
-      <XDataGridTable<IMarvelHeroTableData>
-        columns={ columnsDefault }
-        filterModel={ {
+      <XDataGridTable<IMarvelHeroesDataTable>
+        columns={columnsDefault}
+        filterModel={{
           // items: [ ...dataFiltered ],
           // items: [ ...initData ],
           items: [],
@@ -43,16 +39,18 @@ export const XDataGridTableTab = () => {
           quickFilterValues: [],
           quickFilterLogicOperator: GridLogicOperator.And,
           quickFilterExcludeHiddenColumns: true,
-        } }
-        loading={ false }
-        onRowClick={ handleRowClick }
-        rows = { data }
+        }}
+        loading={false}
+        onRowClick={handleRowClick}
+        rows={data}
       />
       <MarvelHeroModal
-        data={ selectedData }
-        onClose={ () => setIsModalOpen(false) }
-        onSave={ handleSaveData }
-        open={ isModalOpen }
+        // TODO: fix type issue with selectedData being null
+        data={selectedData || initialMarvelHero}
+        onClose={() => setIsModalOpen(false)}
+        /** TODO: implement remote save */
+        onSave={handleSaveDataLocal}
+        open={isModalOpen}
       />
     </>
   );

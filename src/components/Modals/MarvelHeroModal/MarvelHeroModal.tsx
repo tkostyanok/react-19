@@ -1,14 +1,15 @@
-import {
-  type ChangeEvent, type SyntheticEvent,useEffect, useState 
+import type {
+  ChangeEvent, SyntheticEvent 
 } from 'react';
+import { useState } from 'react';
 
 import {
-  useMediaQuery, useTheme
+  useMediaQuery, useTheme 
 } from '@mui/material';
 import Dialog from '@mui/material/Dialog';
 import DialogContent from '@mui/material/DialogContent';
 
-import type { IMarvelHeroTableData } from 'src/interfaces';
+import type { IMarvelHeroesDataTable } from 'src/interfaces';
 import {
   getModificationsFromSimpleObjects, isEmptyObject 
 } from 'src/utils';
@@ -19,45 +20,31 @@ import {
 
 import { MarvelHeroInfo } from './components';
 import type { MarvelHeroModalProps } from './MarvelHeroModalProps';
-import { initialMarvelHero } from './utils';
 
 export const MarvelHeroModal = ({
-  data,
-  isNewHero = false,
-  onClose,
-  onSave,
-  open = false,
+  data, isNewHero = false, onClose, onSave, open = false 
 }: MarvelHeroModalProps) => {
   const theme = useTheme();
   const fullScreen = useMediaQuery(theme.breakpoints.down('sm'));
   // TODO: Optimize with add translation
   const title = isNewHero ? 'Add New Hero' : 'Marvel Hero Details';
 
-  const [ heroFilterValues, setHeroFilterValues ] = useState<IMarvelHeroTableData>(initialMarvelHero);
+  const [ heroFilterValues, setHeroFilterValues ] = useState<IMarvelHeroesDataTable>(data);
   const [ isDataChanged, setIsDataChanged ] = useState(false);
 
-  useEffect(() => {
-    if (isNewHero) {
-      setHeroFilterValues(initialMarvelHero);
-    } else if (!isEmptyObject(data)) {
-      setHeroFilterValues((prevValues: IMarvelHeroTableData) => ({
-        ...prevValues,
-        ...data
-      }));
-    }
-  }, [ data, isNewHero ]);
+  if (open && data && heroFilterValues.id !== data.id) {
+    setHeroFilterValues(data);
+  }
 
   const handleChange = (
-    event: SyntheticEvent 
-      | ChangeEvent<HTMLInputElement> 
-      | (Event & { target: { value: unknown;
-        name: string; }; })
+    event: SyntheticEvent | ChangeEvent<HTMLInputElement> | (Event & { target: { value: unknown;
+      name: string } }),
   ) => {
     const target = event.target as HTMLInputElement;
 
-    setHeroFilterValues((prevValues: IMarvelHeroTableData) => ({
+    setHeroFilterValues((prevValues: IMarvelHeroesDataTable) => ({
       ...prevValues,
-      [target.name]: target.value
+      [target.name]: target.value,
     }));
     setIsDataChanged(true);
   };
@@ -65,12 +52,9 @@ export const MarvelHeroModal = ({
   const handleSubmit = async () => {
     const modifiedValues = isNewHero
       ? {
-        ...heroFilterValues 
+        ...heroFilterValues,
       }
-      : getModificationsFromSimpleObjects(
-        data || {}, 
-        heroFilterValues
-      );
+      : getModificationsFromSimpleObjects(data, heroFilterValues);
 
     // If no changes detected, do not proceed
     if (isEmptyObject(modifiedValues)) {
@@ -82,33 +66,33 @@ export const MarvelHeroModal = ({
     // TODO: move id generation for new hero to context
     await onSave({
       ...modifiedValues,
-      id: data?.id || null
+      id: data?.id || null,
     });
     onClose();
   };
 
   return (
     <Dialog
-      fullScreen={ fullScreen }
+      fullScreen={fullScreen}
       fullWidth
       maxWidth='sm'
-      open={ open }
-      onClose={ onClose }
+      open={open}
+      onClose={onClose}
     >
       <ModalHeader
-        onClose={ onClose }
-        title={ title }
+        onClose={onClose}
+        title={title}
       />
       <DialogContent dividers>
         <MarvelHeroInfo
-          data={ heroFilterValues }
-          onChange={ handleChange }
+          data={heroFilterValues}
+          onChange={handleChange}
         />
       </DialogContent>
       <ModalFooter
-        isDisabled={ !isDataChanged }
-        onClose={ onClose }
-        onSubmit={ handleSubmit }
+        isDisabled={!isDataChanged}
+        onClose={onClose}
+        onSubmit={handleSubmit}
       />
     </Dialog>
   );

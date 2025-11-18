@@ -1,11 +1,10 @@
+import type { SyntheticEvent } from 'react';
 import {
-  type SyntheticEvent,useEffect, useState 
+  useEffect, useMemo, useState 
 } from 'react';
 
 import {
-  type AutocompleteChangeDetails,
-  type AutocompleteChangeReason,
-  useMediaQuery, useTheme
+  type AutocompleteChangeReason, useMediaQuery, useTheme 
 } from '@mui/material';
 import Dialog from '@mui/material/Dialog';
 import DialogContent from '@mui/material/DialogContent';
@@ -25,67 +24,70 @@ import {
 import type { MarvelHeroesFiltersModalProps } from './MarvelHeroesFiltersModalProps';
 
 export const MarvelHeroesFiltersModal = ({
-  onClose,
-  open = false,
+  onClose, open = false 
 }: MarvelHeroesFiltersModalProps) => {
   const theme = useTheme();
   const fullScreen = useMediaQuery(theme.breakpoints.down('sm'));
-  // TODO: Optimize with add translation
-  const LABELS: {[key in keyof IMarvelHeroesData]: string } = {
-    nameLabel: 'Name',
-    genderLabel: 'Gender',
-    citizenshipLabel: 'Citizenship',
-    skillsLabel: 'Skills',
-    occupationLabel: 'Occupation',
-    memberOfLabel: 'Member of',
-    creatorLabel: 'Creator'
-  } as const;
 
   const {
-    data,
-    filters,
-    initFiltersData,
-    setFilters,
+    data, filters, initialFiltersData, setFilters 
   } = useTestPage1Context();
 
-  const [ heroFilterValues, setHeroFilterValues ] = useState<MarvelHeroFilterValues>(initFiltersData);
   const [ isDataChanged, setIsDataChanged ] = useState(false);
-  const [ autocompleteFilters, setAutocompleteFilters ] = useState<MarvelHeroFilterValues>(initFiltersData);
+  const [ autocompleteFilters, setAutocompleteFilters ] = useState<MarvelHeroFilterValues>(filters || initialFiltersData);
 
-  useEffect(() => {
+  // TODO: Optimize with add translation
+  const LABELS: {[key in keyof IMarvelHeroesData]: string } = {
+    name: 'Name',
+    gender: 'Gender',
+    citizenship: 'Citizenship',
+    skills: 'Skills',
+    occupation: 'Occupation',
+    memberOf: 'Member of',
+    creator: 'Creator',
+  } as const;
+
+  const heroesFilterValues = useMemo(() => {
     if (!isEmptyObject(data)) {
-      const names = data?.map(item => item.nameLabel).filter((v): v is string => !!v).sort() ?? [];
-      const genders = data?.map(item => item.genderLabel).filter((v): v is Gender => !!v) ?? [];
+      const names =
+        data
+          ?.map((item) => item.name)
+          .filter((v): v is string => !!v)
+          .sort() ?? [];
+      const genders = data?.map((item) => item.gender).filter((v): v is Gender => !!v) ?? [];
 
-      setHeroFilterValues((prevValues: MarvelHeroFilterValues) => ({
-        ...prevValues,
-        nameLabel: new Set(names),
-        genderLabel: new Set(genders),
-      }));
+      return {
+        ...initialFiltersData,
+        name: [ ...new Set(names) ],
+        gender: [ ...new Set(genders) ],
+      };
     }
-  }, [ data ]);
+
+    return {
+      ...initialFiltersData,
+    };
+  }, [ data, initialFiltersData ]);
 
   useEffect(() => {
-    if(open) {
-      setAutocompleteFilters(filters);
-    }
-  }, [ open ]);
+    setAutocompleteFilters(filters);
+  }, [ filters ]);
 
   const handleChange = (
     _event: SyntheticEvent<Element, Event>,
-    value: (string[] | number[])[],
+    value: (string | number)[],
     _reason: AutocompleteChangeReason,
     field: string,
-    _details?: AutocompleteChangeDetails<string[] | number[]>,
   ) => {
     setAutocompleteFilters((prevValues: MarvelHeroFilterValues) => ({
       ...prevValues,
-      [field]: value || []
+      [field]: value as (string | number)[],
     }));
+
     setIsDataChanged(true);
   };
 
   const handleClose = () => {
+    setAutocompleteFilters(filters);
     setIsDataChanged(false);
     onClose();
   };
@@ -97,51 +99,43 @@ export const MarvelHeroesFiltersModal = ({
 
   return (
     <Dialog
-      fullScreen={ fullScreen }
+      fullScreen={fullScreen}
       fullWidth
       maxWidth='sm'
-      open={ open }
-      onClose={ handleClose }
+      open={open}
+      onClose={handleClose}
     >
       <ModalHeader
-        onClose={ handleClose }
+        onClose={handleClose}
         title='Marvel Heroes Filters'
       />
       <DialogContent dividers>
         <Grid
           container
-          spacing={ 2 }
+          spacing={2}
         >
-          {
-            ([ 'nameLabel', 'genderLabel' ] as const).map((item) => (
-              <Grid
-                key={`filters-${item}`}
-                size={ 12 }
-              >
-                <BasicAutocomplete
-                  disabled={ [ ...heroFilterValues[`${item}`] ].length === 0 }
-                  id={`basic-autocomplete-${item}`}
-                  label={LABELS[item]}
-                  onChange={(event, value, reason, details) =>
-                    handleChange(event, value, reason, `${item}`,  details)
-                  }
-                  options={
-                    Array.isArray(heroFilterValues[`${item}`])
-                      ? [ ...heroFilterValues[`${item}`] ].map(name => [ name ])
-                      : Array.from(heroFilterValues[`${item}`]).map(name => [ name ])
-                  }
-                  size='small'
-                  value={[ ...autocompleteFilters[`${item}`] ] as any} // Todo: fix any
-                />
-              </Grid>
-            ))
-          }
+          {([ 'name', 'gender' ] as const).map((item) => (
+            <Grid
+              key={`filters-${item}`}
+              size={12}
+            >
+              <BasicAutocomplete
+                disabled={heroesFilterValues[item].length === 0}
+                id={`basic-autocomplete-${item}`}
+                label={LABELS[item]}
+                onChange={(event, value, reason) => handleChange(event, value, reason, `${item}`)}
+                options={[ ...heroesFilterValues[item] ] as string[]}
+                size='small'
+                value={[ ...autocompleteFilters[`${item}`] ]}
+              />
+            </Grid>
+          ))}
         </Grid>
       </DialogContent>
       <ModalFooter
-        isDisabled={ !isDataChanged }
-        onClose={ handleClose }
-        onSubmit={ handleSubmit }
+        isDisabled={!isDataChanged}
+        onClose={handleClose}
+        onSubmit={handleSubmit}
         submitButtonText='Apply'
       />
     </Dialog>

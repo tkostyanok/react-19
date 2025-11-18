@@ -9,7 +9,7 @@ import {
 } from 'src/components/Modals';
 import { MuiTable } from 'src/components/Organisms/MuiTable';
 import { useTestPage1Context } from 'src/context';
-import type { IMarvelHeroTableData } from 'src/interfaces';
+import type { IMarvelHeroesDataTable } from 'src/interfaces';
 
 import { headerCells } from './utils/helper';
 import {
@@ -19,11 +19,14 @@ import {
 export const MuiTableTab = () => {
   const {
     data,
+    dataUsage,
     filters,
     filteredData,
     handleDeleteFilter,
-    handleSaveData,
+    handleSaveDataLocal,
+    handleSaveDataRemote,
     hasFilters,
+    initialMarvelHero,
     isModalOpen,
     selectedData,
     setIsModalOpen,
@@ -31,19 +34,19 @@ export const MuiTableTab = () => {
   } = useTestPage1Context();
 
   const [ isNewHero, setIsNewHero ] = useState(false);
-  const [ openFiltersModal, setOpenFiltersModal  ] = useState(false);
+  const [ openFiltersModal, setOpenFiltersModal ] = useState(false);
 
   const _headerCells = useMemo(() => {
-    return headerCells.map(cell => ({
+    return headerCells.map((cell) => ({
       ...cell,
-      filters: filters[cell.field as keyof typeof filters]
+      filters: filters[cell.field as keyof typeof filters],
     }));
   }, [ filters ]);
 
   const handleAddMarvelHero = () => {
     setSelectedData(null);
     setIsNewHero(true);
-    setIsModalOpen(isModalOpen => !isModalOpen);
+    setIsModalOpen((isModalOpen) => !isModalOpen);
   };
 
   const handleCloseModal = () => {
@@ -52,22 +55,25 @@ export const MuiTableTab = () => {
     setIsNewHero(false);
   };
 
-  const handleRowClick = useCallback((data: IMarvelHeroTableData) => {
-    setSelectedData(prevData => ({
-      ...prevData,
-      ...data 
-    }));
-    setIsNewHero(false);
-    setIsModalOpen(isModalOpen => !isModalOpen);
-  }, [ setSelectedData, setIsNewHero, setIsModalOpen ]);
+  const handleRowClick = useCallback(
+    (data: IMarvelHeroesDataTable) => {
+      setSelectedData((prevData) => ({
+        ...prevData,
+        ...data,
+      }));
+      setIsNewHero(false);
+      setIsModalOpen((isModalOpen) => !isModalOpen);
+    },
+    [ setSelectedData, setIsNewHero, setIsModalOpen ],
+  );
 
   return (
     <>
-      <MuiTable<IMarvelHeroTableData>
+      <MuiTable<IMarvelHeroesDataTable>
         headerCells={_headerCells}
         onFilterClick={setOpenFiltersModal}
-        onFilterDelete={handleDeleteFilter as (filter: keyof IMarvelHeroTableData, value: string) => void}
-        onRowClick={ handleRowClick }
+        onFilterDelete={handleDeleteFilter as (filter: keyof IMarvelHeroesDataTable, value: string) => void}
+        onRowClick={handleRowClick}
         rowsData={hasFilters ? filteredData : data}
         toolbarChildren={
           <Stack
@@ -75,7 +81,7 @@ export const MuiTableTab = () => {
             spacing={1}
           >
             <AddNewHeroButton
-              disabled={/*isLoading ||*/ false}
+              disabled={/*isLoading || remote server not available*/ false}
               onClick={handleAddMarvelHero}
             />
             <FiltersButton
@@ -86,14 +92,14 @@ export const MuiTableTab = () => {
         }
       />
       <MarvelHeroModal
-        data={ selectedData }
-        isNewHero={ isNewHero }
-        onClose={ handleCloseModal }
-        onSave={ handleSaveData }
-        open={ isModalOpen }
+        data={selectedData || initialMarvelHero}
+        isNewHero={isNewHero}
+        onClose={handleCloseModal}
+        onSave={dataUsage === 'local' ? handleSaveDataLocal : handleSaveDataRemote}
+        open={isModalOpen}
       />
       <MarvelHeroesFiltersModal
-        open={ openFiltersModal }
+        open={openFiltersModal}
         onClose={() => setOpenFiltersModal(false)}
       />
     </>

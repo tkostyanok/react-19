@@ -1,33 +1,30 @@
-
 import Autocomplete, { type AutocompleteProps } from '@mui/material/Autocomplete';
 import Box from '@mui/material/Box';
-import TextField from '@mui/material/TextField'; 
+import TextField from '@mui/material/TextField';
 
 import { BasicLabel } from '../BasicLabel';
 
 import type { BasicAutocompleteProps } from './BasicAutocompleteProps';
 
-export const BasicAutocomplete = ({
+export const BasicAutocomplete = <T extends string | number = string>({
   label,
-  options,
   ...props
-}: BasicAutocompleteProps & Omit<AutocompleteProps<number[] | string[], true, true , false>, 'renderInput'>) => {
+}: BasicAutocompleteProps & Omit<AutocompleteProps<T, true, true, false>, 'renderInput'>) => {
   return (
     <Box>
       <BasicLabel label={label} />
-      <Autocomplete
+      <Autocomplete<T, true, true, false>
         multiple
         disableCloseOnSelect
-        getOptionLabel={(option) => option[0] as string}
-        isOptionEqualToValue={(option, value) => option[0] === value[0]}
-        options={options}
+        getOptionLabel={(option: T) => String(option)}
+        isOptionEqualToValue={(option, value) => option === value}
         renderInput={(params) => (
-          <TextField 
+          <TextField
             {...params}
             placeholder='Search'
           />
         )}
-        { ...props }
+        {...props}
       />
     </Box>
   );
