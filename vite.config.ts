@@ -12,7 +12,7 @@ dotenv.config();
 const viteConfig = defineViteConfig({
   plugins: [ react() ],
   define: {
-    'process.env': process.env,
+    'process.env.VITE_BE_SERVER_URL': JSON.stringify(process.env.VITE_BE_SERVER_URL),
   },
   resolve: {
     alias: {
@@ -28,7 +28,7 @@ const viteConfig = defineViteConfig({
     },
   },
   server: {
-    allowedHosts: [ '.local', 'localhost' /*, 'http://nuc7.local'*/],
+    allowedHosts: [ '.local', 'localhost' ],
     port: 8080,
     strictPort: true,
   },

@@ -8,7 +8,7 @@ import { isEqual } from 'lodash';
  */
 
 // TODO: tests!
-export const getModificationsFromSimpleObjects = <T extends Record<string, unknown>>(initial: T, updated: T): T => {
+export const getModificationsFromSimpleObjects = <T extends object>(initial: T, updated: T): T => {
   const result: T = {
     ...updated,
   };

@@ -26,3 +26,32 @@ dist-ssr
 
 # Files
 src/pages/*/task/*
+
+# Misc
+.env
+.env.local
+.env.*.local
+.cache
+.parcel-cache
+.next
+.nuxt
+.out
+.build
+.eslintcache
+.jspm-cache
+.babelrc
+.yarn-integrity
+.pnp.*
+.sass-cache
+connect.lock
+coverage
+lib-cov
+*.seed
+*.pid
+*.pid.lock
+library
+logs
+reporter-output.txt
+testem.log
+turbo-debug.log
+.vite

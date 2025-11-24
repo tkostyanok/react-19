@@ -293,10 +293,20 @@ npm install dotenv
 Create a `.env` file in the root of project directory. This file will hold project environment variables:
 
 ```
-VITE_BE_SERVER_URL='http://<HOST>:<PORT><EXTRA_IF_REQUIRED>'
+VITE_KEY='defined data / key / link'
 ```
 
 **Note:** It is very important that `Vite` requires environment variables to start with `VITE_` for them to be exposed to client-side code. For `create-react-app` - environment variable starts with `REACT_APP_`.
+
+### Ignore the `.env` file
+
+Add `.env` to `.gitignore` file, so that it is not committed to project repository. This is important so as not to make the whole saving into a `.env` file into a fruitless effort.
+
+```
+.env
+.env.local
+.env.*.local
+```
 
 
 ### (Optional) Configure dotenv in vite.config.js if custom behavior is needed
@@ -315,7 +325,7 @@ dotenv.config(); // OR config();
 export default defineConfig({
   // Exist Vite configuration
   define: {
-    'process.env': process.env
+     'process.env.<VITE_KEY>': JSON.stringify(process.env.VITE_KEY)
   }
 });
 ```
@@ -325,13 +335,13 @@ export default defineConfig({
 To get access to the environment variables in JavaScript or TypeScript application code using:
 
 ```
-import.meta.env.VITE_API_KEY
+import.meta.env.VITE_KEY
 ```
 
 To check variable(s) value(s):
 
 ```
-console.log(import.meta.env.VITE_API_KEY); // Outputs: your-api-key
+console.log(import.meta.env.VITE_KEY); // Outputs: defined data / key / link
 ```
 
 
