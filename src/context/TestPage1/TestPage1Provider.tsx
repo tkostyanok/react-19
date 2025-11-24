@@ -260,6 +260,12 @@ export const TestPage1Provider = ({
     if (dataUsage === 'remote') {
       apiTestPage1
         .getAllHeroes()
+        // Note1: next fetch for test and checking data in console
+        // Note2: should be removed later
+        .then((fetchedData: Omit<IMarvelHeroesDataTable, 'actions'>[]) => {
+          console.log('Fetched remote data:', fetchedData);
+          return fetchedData;
+        })
         .then((fetchedData: Omit<IMarvelHeroesDataTable, 'actions'>[]) => {
           if (!fetchedData || fetchedData.length === 0) {
             setData([]);
