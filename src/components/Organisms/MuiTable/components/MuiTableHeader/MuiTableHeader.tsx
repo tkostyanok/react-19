@@ -10,10 +10,11 @@ import FilterAltIcon from '@mui/icons-material/FilterAlt';
 import {
   GREY_300, GREY_600 
 } from 'src/constants/colors';
+import { ensureStringArray } from 'src/utils';
 
 import type { MuiTableHeaderProps } from './MuiTableHeaderProps';
 
-export const  MuiTableHeader = <T extends object>({
+export const MuiTableHeader = <T extends object>({
   headerCells,
   onFilterClick,
   onFilterDelete,
@@ -21,12 +22,11 @@ export const  MuiTableHeader = <T extends object>({
   order,
   orderBy,
 }: MuiTableHeaderProps<T>) => {
-  const createSortHandler =
-    (property: keyof T) => (event: React.MouseEvent<unknown>) => {
-      onRequestSort(event, property);
-    };
+  const createSortHandler = (property: keyof T) => (event: React.MouseEvent<unknown>) => {
+    onRequestSort(event, property);
+  };
 
-  const hasFilters = headerCells.some((cell) => cell?.filters && [ ...cell?.filters ]?.length > 0);
+  const hasFilters = headerCells.some((cell) => ensureStringArray(cell?.filters).length > 0) || false;
 
   return (
     <TableHead>
@@ -34,7 +34,7 @@ export const  MuiTableHeader = <T extends object>({
         sx={{
           backgroundColor: GREY_300,
           borderBottom: `2px solid ${GREY_600}`,
-          borderTop: `2px solid ${GREY_600}`
+          borderTop: `2px solid ${GREY_600}`,
         }}
       >
         {headerCells.map((headerCell) => (
@@ -45,87 +45,73 @@ export const  MuiTableHeader = <T extends object>({
             sx={{
               maxWidth: headerCell?.width ? `${headerCell.width}px` : 'none',
               padding: '16px 10px',
-              width: headerCell?.width ? `${headerCell.width}px` : 'auto'
+              width: headerCell?.width ? `${headerCell.width}px` : 'auto',
             }}
           >
             {headerCell.headerName}
-            {headerCell?.field !== 'actions'
-              ? (
-                <TableSortLabel
-                  active={orderBy === headerCell.field}
-                  direction={orderBy === headerCell.field ? order : 'asc'}
-                  onClick={createSortHandler(headerCell.field)}
+            {headerCell?.field !== 'actions' ? (
+              <TableSortLabel
+                active={orderBy === headerCell.field}
+                direction={orderBy === headerCell.field ? order : 'asc'}
+                onClick={createSortHandler(headerCell.field)}
+              />
+            ) : null}
+            {headerCell?.filters && ensureStringArray(headerCell?.filters).length > 0 ? (
+              <Badge
+                badgeContent={[ ...headerCell.filters ].length}
+                color='primary'
+                onClick={() => onFilterClick?.((prevState) => !prevState)}
+              >
+                <FilterAltIcon
+                  fontSize='small'
+                  sx={{
+                    color: GREY_600,
+                  }}
                 />
-              )
-              : null
-            }
-            {
-              headerCell?.filters && [ ...headerCell?.filters ]?.length > 0
-                ? (
-                  <Badge
-                    badgeContent={[ ...headerCell?.filters ]?.length} 
-                    color='primary'
-                    onClick={() => onFilterClick?.(prevState => !prevState)}
-                  >
-                    <FilterAltIcon
-                      fontSize='small'
-                      sx={{
-                        color: GREY_600 
-                      }}
-                    />
-                  </Badge>
-                )
-                : null 
-            }
+              </Badge>
+            ) : null}
           </TableCell>
         ))}
       </TableRow>
-      { hasFilters 
-        ? (
-          <TableRow>
-            {headerCells.map((headerCell) => (
-              <TableCell
-                key={`${headerCell.field}-filters`}
-                align={headerCell?.align || 'inherit'}
+      {hasFilters ? (
+        <TableRow>
+          {headerCells.map((headerCell) => (
+            <TableCell
+              key={`${headerCell.field}-filters`}
+              align={headerCell?.align || 'inherit'}
+              sx={{
+                maxWidth: headerCell?.width ? `${headerCell.width}px` : 'none',
+                padding: '6px 10px',
+                width: headerCell?.width ? `${headerCell.width}px` : 'auto',
+              }}
+            >
+              <Box
                 sx={{
-                  maxWidth: headerCell?.width ? `${headerCell.width}px` : 'none',
-                  padding: '6px 10px',
-                  width: headerCell?.width ? `${headerCell.width}px` : 'auto'
+                  display: 'flex',
+                  flexWrap: 'wrap',
+                  gap: '4px',
+                  height: '40px',
+                  overflowY: 'auto',
                 }}
               >
-                <Box
-                  sx={{
-                    display: 'flex',
-                    flexWrap: 'wrap',
-                    gap: '4px',
-                    height: '40px',
-                    overflowY: 'auto',
-                  }}
-                >
-                  {
-                    headerCell?.filters && [ ...headerCell?.filters ]?.length > 0
-                      ? (
-                        [ ...headerCell?.filters ].map((filter) => (
-                          <Chip
-                            key={`${headerCell.field}-filter-${filter}`}
-                            label={filter}
-                            size='small'
-                            variant='outlined'
-                            onDelete={onFilterDelete 
-                              ? () => onFilterDelete(headerCell.field as keyof T, filter) 
-                              : undefined
-                            }
-                          />
-                        ))
-                      )
-                      : null 
-                  }
-                </Box>
-              </TableCell>
-            ))}
-          </TableRow>
-        ) 
-        : null}
+                {headerCell?.filters && ensureStringArray(headerCell?.filters).length > 0
+                  ? [ ...headerCell.filters ].map((filter) => (
+                    <Chip
+                      key={`${headerCell.field}-filter-${filter}`}
+                      label={filter}
+                      size='small'
+                      variant='outlined'
+                      onDelete={
+                        onFilterDelete ? () => onFilterDelete(headerCell.field as keyof T, filter) : undefined
+                      }
+                    />
+                  ))
+                  : null}
+              </Box>
+            </TableCell>
+          ))}
+        </TableRow>
+      ) : null}
     </TableHead>
   );
 };

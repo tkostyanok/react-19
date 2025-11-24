@@ -1,41 +1,40 @@
 import type {
-  IMarvelHeroTableData,
-  MuiTableHeaderCell
+  IMarvelHeroesDataTable, MuiTableHeaderCell 
 } from 'src/interfaces';
 
-export const headerCells: MuiTableHeaderCell<IMarvelHeroTableData>[] = [
-  { 
-    field: 'nameLabel',
+export const headerCells: MuiTableHeaderCell<IMarvelHeroesDataTable>[] = [
+  {
+    field: 'name',
     headerName: 'Name',
     width: 130,
   },
   {
-    field: 'genderLabel',
+    field: 'gender',
     headerName: 'Gender',
     width: 90,
   },
   {
-    field: 'citizenshipLabel',
+    field: 'citizenship',
     headerName: 'Citizenship',
     width: 180,
-  },  
+  },
   {
-    field: 'skillsLabel',
+    field: 'skills',
     headerName: 'Skills',
     width: 170,
   },
   {
-    field: 'occupationLabel',
+    field: 'occupation',
     headerName: 'Occupation',
     width: 120,
   },
   {
-    field: 'memberOfLabel',
+    field: 'memberOf',
     headerName: 'Member of',
     width: 150,
   },
   {
-    field: 'creatorLabel',
+    field: 'creator',
     headerName: 'Creator',
     width: 140,
   },
@@ -43,5 +42,5 @@ export const headerCells: MuiTableHeaderCell<IMarvelHeroTableData>[] = [
     field: 'actions',
     headerName: 'Actions',
     width: 50,
-  }
+  },
 ];

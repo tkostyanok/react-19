@@ -1,45 +1,57 @@
 import type {
-  Dispatch,
-  SetStateAction 
+  Dispatch, SetStateAction 
 } from 'react';
 import {
-  createContext,
-  useContext 
+  createContext, useContext 
 } from 'react';
 
 import type {
-  IMarvelHeroTableData, MarvelHeroFilterValues 
+  IMarvelHeroesDataTable, MarvelHeroFilterValues, TDataUsage 
 } from 'src/interfaces';
 
-import { initFiltersData } from './utils';
- 
+import {
+  initialFiltersData, initialMarvelHero 
+} from './utils';
+
 interface ITestPage1Context {
-  data: IMarvelHeroTableData[];
-  filteredData: IMarvelHeroTableData[];
+  data: IMarvelHeroesDataTable[];
+  dataUsage: TDataUsage;
+  filteredData: IMarvelHeroesDataTable[];
   filters: MarvelHeroFilterValues;
-  handleDeleteData: ( dataToDelete: IMarvelHeroTableData ) => void;
-  handleDeleteFilter: ( filter: keyof MarvelHeroFilterValues, value: string ) => void;
-  handleSaveData: ( dataToSave: Partial<IMarvelHeroTableData> ) => Promise<void>;
+  handleDeleteFilter: (filter: keyof MarvelHeroFilterValues, value: string) => void;
+  /**
+   * Function calls to save data locally
+   */
+  handleSaveDataLocal: (dataToSave: Partial<IMarvelHeroesDataTable>) => void;
+  /**
+   * Function calls to save data remotely
+   */
+  handleSaveDataRemote: (dataToSave: Partial<IMarvelHeroesDataTable>) => Promise<void>;
   hasFilters: boolean;
-  initFiltersData: MarvelHeroFilterValues;
+  initialFiltersData: MarvelHeroFilterValues;
+  initialMarvelHero: IMarvelHeroesDataTable;
   isModalOpen: boolean;
-  selectedData: IMarvelHeroTableData | null;
+  selectedData: IMarvelHeroesDataTable | null;
+  setDataUsage: (dataUsage: TDataUsage) => void;
   setFilters: Dispatch<SetStateAction<MarvelHeroFilterValues>>;
   setIsModalOpen: Dispatch<SetStateAction<boolean>>;
-  setSelectedData: Dispatch<SetStateAction<IMarvelHeroTableData | null>>;
+  setSelectedData: Dispatch<SetStateAction<IMarvelHeroesDataTable | null>>;
 }
 
 export const TestPage1Context = createContext<ITestPage1Context>({
   data: [],
+  dataUsage: 'local',
   filteredData: [],
-  filters: initFiltersData,
-  handleDeleteData: () => {},
+  filters: initialFiltersData,
   handleDeleteFilter: () => {},
-  handleSaveData: async () => {},
+  handleSaveDataLocal: () => {},
+  handleSaveDataRemote: async () => {},
   hasFilters: false,
-  initFiltersData: initFiltersData,
+  initialFiltersData: initialFiltersData,
+  initialMarvelHero: initialMarvelHero,
   isModalOpen: false,
   selectedData: null,
+  setDataUsage: () => {},
   setFilters: () => {},
   setIsModalOpen: () => {},
   setSelectedData: () => {},
